@@ -9,7 +9,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Optional "Built with" footer credit, controlled by `showThemeCredit` in `src/data/site.js`.
+- Optional "Theme by ThemesEngine" footer credit, controlled by `showThemeCredit` in `src/data/site.js`.
 - Contributing guide, security policy, and issue and pull request templates.
 
 ### Changed

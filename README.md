@@ -4,7 +4,7 @@
 [![CI](https://github.com/themesengine/software-engineer-portfolio-theme/actions/workflows/ci.yml/badge.svg)](https://github.com/themesengine/software-engineer-portfolio-theme/actions/workflows/ci.yml)
 [![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-ff5d01.svg)](https://astro.build)
 
-A dark, technical, open source portfolio and landing-page theme for independent software engineers, consultants and small dev studios. It covers case studies, services, writing and a project enquiry form that delivers to your inbox.
+A dark, technical, open source portfolio and landing-page theme by [ThemesEngine](https://themesengine.com) for independent software engineers, consultants and small dev studios. It covers case studies, services, writing and a project enquiry form that delivers to your inbox.
 
 ![Home page of the Software Engineer Portfolio theme](.github/assets/screenshot.png)
 
@@ -158,4 +158,4 @@ The project covers, article images, placeholder portrait, social image and favic
 
 ## License
 
-[MIT](LICENSE.md). Use it for personal or client sites, modify it and share it. The footer's "Built with" credit is optional, but keeping it is a nice way to support the project. Set `showThemeCredit` to `false` in `src/data/site.js` to remove it.
+[MIT](LICENSE.md). Use it for personal or client sites, modify it and share it. The footer's "Theme by [ThemesEngine](https://themesengine.com)" credit is optional, but keeping it is a nice way to support the project. Set `showThemeCredit` to `false` in `src/data/site.js` to remove it.

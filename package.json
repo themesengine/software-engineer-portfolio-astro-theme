@@ -45,5 +45,8 @@
   },
   "packageManager": "yarn@1.22.22",
   "license": "MIT",
-  "author": "ThemesEngine"
+  "author": {
+    "name": "ThemesEngine",
+    "url": "https://themesengine.com"
+  }
 }

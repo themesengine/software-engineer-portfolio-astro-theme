@@ -79,7 +79,7 @@ export const site = {
     // false once your legal content has been reviewed.
     showDemoContentNotice: true,
 
-    // Shows a small "Built with" link to the theme in the footer. It's
+    // Shows a small "Theme by ThemesEngine" link in the footer. It's
     // optional: set to false to remove it.
     showThemeCredit: true,
 
