@@ -1,0 +1,22 @@
+---
+import {
+    site
+} from "@/data/site";
+import {
+    formatDate
+} from "@/lib/format";
+---
+
+<p class="legal__updated">
+    Last updated {formatDate(site.legalUpdatedAt)}
+</p>
+
+{site.showDemoContentNotice && (
+    <p
+        class="legal__notice"
+        role="note"
+    >
+        This is demonstration content. Have it reviewed by a qualified adviser before you publish it,
+        then set <code>showDemoContentNotice</code> to <code>false</code> in <code>src/data/site.js</code>.
+    </p>
+)}

@@ -1,0 +1,59 @@
+/* Call-to-action banner near the bottom of most pages. */
+
+.cta-banner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: center;
+    padding: var(--space-12);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(ellipse 70% 120% at 100% 0%, rgb(61 220 132 / 0.16), transparent 60%),
+        var(--color-surface);
+}
+
+.cta-banner__text {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+}
+
+.cta-banner__title {
+    font-size: var(--text-3xl);
+}
+
+.cta-banner__intro {
+    color: var(--color-text-muted);
+}
+
+.cta-banner__actions {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.cta-banner__actions .button--ghost {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 64rem) {
+    .cta-banner {
+        grid-template-columns: minmax(0, 1fr);
+        padding: var(--space-8);
+    }
+
+    .cta-banner__actions {
+        justify-items: start;
+    }
+}
+
+@media (max-width: 48rem) {
+    .cta-banner {
+        padding: var(--space-6);
+    }
+
+    .cta-banner__actions,
+    .cta-banner__actions .button {
+        width: 100%;
+    }
+}

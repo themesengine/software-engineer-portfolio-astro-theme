@@ -1,0 +1,130 @@
+---
+import Logo from "@/components/Logo.astro";
+import {
+    footerNavigation,
+    legalNavigation
+} from "@/data/navigation";
+import {
+    site
+} from "@/data/site";
+
+const socialLabels = {
+    github: "GitHub",
+    linkedin: "LinkedIn",
+    mastodon: "Mastodon"
+};
+
+const socialLinks =
+    Object.entries(site.social)
+        .filter(([, url]) => Boolean(url))
+        .map(([key, url]) => ({
+            label: socialLabels[key] || key,
+            url
+        }));
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="site-footer__grid">
+            <div class="site-footer__brand">
+                <Logo/>
+
+                <p class="site-footer__tagline">
+                    {site.tagline}
+                </p>
+
+                <ul
+                    class="site-footer__contact"
+                    role="list"
+                >
+                    <li>
+                        <a href={`mailto:${site.email}`}>
+                            {site.email}
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`tel:${site.phone.value}`}>
+                            {site.phone.display}
+                        </a>
+                    </li>
+                    {site.address.city && (
+                        <li class="text-muted">
+                            {site.address.city}, {site.address.country}
+                        </li>
+                    )}
+                </ul>
+            </div>
+
+            {footerNavigation.map((column) => (
+                <nav
+                    class="site-footer__column"
+                    aria-label={column.title}
+                >
+                    <h2 class="site-footer__title">
+                        {column.title}
+                    </h2>
+
+                    <ul
+                        class="site-footer__links"
+                        role="list"
+                    >
+                        {column.links.map((link) => (
+                            <li>
+                                <a href={link.href}>
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            ))}
+
+            {socialLinks.length > 0 && (
+                <div class="site-footer__column">
+                    <h2 class="site-footer__title">
+                        Elsewhere
+                    </h2>
+
+                    <ul
+                        class="site-footer__links"
+                        role="list"
+                    >
+                        {socialLinks.map((link) => (
+                            <li>
+                                <a
+                                    href={link.url}
+                                    rel="me noopener"
+                                    target="_blank"
+                                >
+                                    {link.label}
+                                    <span class="visually-hidden"> (opens in a new tab)</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
+
+        <div class="site-footer__bottom">
+            <p>
+                © {year} {site.legalName}
+            </p>
+
+            <ul
+                class="site-footer__legal"
+                role="list"
+            >
+                {legalNavigation.map((link) => (
+                    <li>
+                        <a href={link.href}>
+                            {link.label}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
+</footer>

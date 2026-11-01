@@ -1,0 +1,76 @@
+---
+import LegalNotice from "@/components/LegalNotice.astro";
+import PageHero from "@/components/PageHero.astro";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Privacy policy"
+    description={`How ${site.legalName} collects, uses and protects personal data sent through this website.`}
+>
+    <PageHero
+        eyebrow="Legal"
+        title="Privacy policy"
+    >
+        <LegalNotice/>
+    </PageHero>
+
+    <section class="section section--flush-top">
+        <div class="container container--narrow prose">
+            <h2>Who I am</h2>
+            <p>
+                This website is run by {site.legalName} ("I", "me"), trading as {site.name}, based in
+                {" "}{site.address.city}, {site.address.country}. I am the data controller for personal data
+                collected through this website. You can contact me at{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a>.
+            </p>
+
+            <h2>What I collect</h2>
+            <ul>
+                <li><strong>Enquiry and contact forms:</strong> your name, email address, company (if given), project details, budget and timeline.</li>
+                <li><strong>Emails:</strong> whatever you choose to include when you write to me directly.</li>
+                <li><strong>Server logs:</strong> IP address, browser type and the pages requested, kept briefly for security and to prevent abuse of the forms.</li>
+            </ul>
+            <p>
+                This website does not use analytics, advertising trackers or third-party cookies.
+                Fonts are served from this website, so your browser does not contact Google when you visit.
+            </p>
+
+            <h2>Why I use it</h2>
+            <ul>
+                <li>To reply to your enquiry and, if we work together, to prepare a proposal and contract (legitimate interests and steps before entering a contract).</li>
+                <li>To keep the website secure and stop spam (legitimate interests).</li>
+                <li>To meet accounting and tax obligations if we work together (legal obligation).</li>
+            </ul>
+
+            <h2>Who I share it with</h2>
+            <p>
+                Form submissions are delivered to me by email or a secure webhook through service providers
+                that process data on my behalf. I don't sell personal data or share it for marketing.
+            </p>
+
+            <h2>How long I keep it</h2>
+            <p>
+                Enquiries that don't lead to work are deleted within 12 months. Client records are kept for
+                six years after the end of an engagement to meet UK accounting requirements.
+            </p>
+
+            <h2>Your rights</h2>
+            <p>
+                Under UK data protection law you can ask to access, correct or delete your data, object to or
+                restrict how it's used, and ask for a copy in a portable format. Email{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a> and I'll respond within one month.
+                You can also complain to the Information Commissioner's Office (ico.org.uk).
+            </p>
+
+            <h2>Changes</h2>
+            <p>
+                I'll update this page if the way I handle data changes. The date at the top shows when it was
+                last revised.
+            </p>
+        </div>
+    </section>
+</Layout>

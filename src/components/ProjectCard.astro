@@ -1,0 +1,55 @@
+---
+import {
+    Image
+} from "astro:assets";
+
+const {
+    project,
+    headingLevel = 3
+} = Astro.props;
+
+const Heading = `h${headingLevel}`;
+---
+
+<article class="project-card">
+    <div class="project-card__media">
+        <Image
+            src={project.image}
+            alt={project.imageAlt}
+            widths={[480, 800, 1200]}
+            sizes="(max-width: 48rem) 100vw, (max-width: 64rem) 50vw, 560px"
+            class="project-card__image"
+        />
+    </div>
+
+    <div class="project-card__body">
+        <p class="project-card__meta">
+            {project.client} · {project.sector} · {project.year}
+        </p>
+
+        <Heading class="project-card__title">
+            <a
+                href={`/projects/${project.slug}`}
+                class="project-card__link"
+            >
+                {project.title}
+            </a>
+        </Heading>
+
+        <p class="project-card__summary">
+            {project.summary}
+        </p>
+
+        <ul
+            class="tags"
+            role="list"
+            aria-label="Technologies"
+        >
+            {project.stack.slice(0, 4).map((item) => (
+                <li class="tag">
+                    {item}
+                </li>
+            ))}
+        </ul>
+    </div>
+</article>

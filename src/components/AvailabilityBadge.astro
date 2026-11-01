@@ -1,0 +1,19 @@
+---
+import {
+    site
+} from "@/data/site";
+
+// Driven by site.availability in src/data/site.js.
+const {
+    open,
+    label
+} = site.availability;
+---
+
+<p class={`availability ${open ? "availability--open" : "availability--closed"}`}>
+    <span
+        class="availability__dot"
+        aria-hidden="true"
+    ></span>
+    {open ? label : "Currently fully booked"}
+</p>

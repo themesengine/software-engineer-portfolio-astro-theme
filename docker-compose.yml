@@ -1,0 +1,22 @@
+# Builds and runs your site from this folder.
+#   1. cp .env.example .env   and fill in your values
+#   2. docker compose up -d --build
+services:
+  web:
+    build:
+      context: .
+      args:
+        # Your public HTTPS domain, without a trailing slash.
+        PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-http://localhost:3000}
+        PUBLIC_SITE_NOINDEX: ${PUBLIC_SITE_NOINDEX:-false}
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    # Form delivery settings (RESEND_API_KEY, FORM_WEBHOOK_URL, ...).
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Override the local-development values from .env.
+      HOST: 0.0.0.0
+      PORT: 3000

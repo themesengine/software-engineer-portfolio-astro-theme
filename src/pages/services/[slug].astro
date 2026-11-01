@@ -1,0 +1,180 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import PageHero from "@/components/PageHero.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import {
+    getProjectsForService
+} from "@/data/projects";
+import {
+    services
+} from "@/data/services";
+import Layout from "@/layouts/Layout.astro";
+import {
+    formatPrice
+} from "@/lib/format";
+import {
+    createBreadcrumbSchema
+} from "@/lib/json-ld";
+
+export function getStaticPaths() {
+    return services.map((service) => ({
+        params: {
+            slug: service.slug
+        },
+        props: {
+            service
+        }
+    }));
+}
+
+const {
+    service
+} = Astro.props;
+
+const path = `/services/${service.slug}`;
+
+const breadcrumbs = [
+    {
+        label: "Home",
+        href: "/"
+    },
+    {
+        label: "Services",
+        href: "/services"
+    },
+    {
+        label: service.title,
+        href: path
+    }
+];
+
+const relatedProjects =
+    getProjectsForService(service.slug).slice(0, 2);
+
+const otherServices =
+    services.filter((candidate) => candidate.slug !== service.slug).slice(0, 3);
+---
+
+<Layout
+    title={service.title}
+    description={`${service.summary} ${service.intro}`}
+    structuredData={createBreadcrumbSchema(breadcrumbs)}
+>
+    <Breadcrumbs items={breadcrumbs}/>
+
+    <PageHero
+        eyebrow="Service"
+        title={service.title}
+        intro={service.intro}
+    >
+        <div class="page-hero__actions">
+            <a
+                href="/hire"
+                class="button"
+            >
+                Discuss your project
+            </a>
+
+            {service.priceFrom && (
+                <p class="page-hero__price">
+                    From {formatPrice(service.priceFrom)} {service.priceUnit}
+                </p>
+            )}
+        </div>
+    </PageHero>
+
+    <section class="section section--flush-top">
+        <div class="container split">
+            <div>
+                <h2 class="section-title">What's included</h2>
+
+                <ul
+                    class="check-list check-list--large"
+                    role="list"
+                >
+                    {service.includes.map((item) => (
+                        <li>{item}</li>
+                    ))}
+                </ul>
+
+                <p class="service-detail__ideal">
+                    <strong>Ideal for:</strong> {service.idealFor}
+                </p>
+            </div>
+
+            <div>
+                <h2 class="section-title">How it runs</h2>
+
+                <ol
+                    class="steps"
+                    role="list"
+                >
+                    {service.process.map((step, index) => (
+                        <li class="steps__item">
+                            <span class="steps__number">{index + 1}</span>
+                            <div>
+                                <h3 class="steps__title">{step.title}</h3>
+                                <p class="steps__text">{step.text}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--surface">
+        <div class="container container--narrow">
+            <h2 class="section-title">Common questions</h2>
+
+            <div class="faq">
+                {service.faqs.map((faq) => (
+                    <details class="faq__item">
+                        <summary class="faq__question">{faq.question}</summary>
+                        <p class="faq__answer">{faq.answer}</p>
+                    </details>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    {relatedProjects.length > 0 && (
+        <section class="section">
+            <div class="container">
+                <div class="section__header">
+                    <div class="section__heading">
+                        <p class="eyebrow">In practice</p>
+                        <h2>Related case studies</h2>
+                    </div>
+                </div>
+
+                <div class="project-list">
+                    {relatedProjects.map((project) => (
+                        <ProjectCard project={project}/>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <section class="section section--surface">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Also available</p>
+                    <h2>Other services</h2>
+                </div>
+            </div>
+
+            <div class="grid grid--3">
+                {otherServices.map((other) => (
+                    <ServiceCard service={other}/>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CtaBanner/>
+</Layout>

@@ -1,0 +1,39 @@
+---
+import CtaBanner from "@/components/CtaBanner.astro";
+import PageHero from "@/components/PageHero.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import {
+    projects
+} from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Selected work"
+    description="Case studies of platforms, APIs and products built for fintech, healthcare, research and SaaS teams."
+>
+    <PageHero
+        eyebrow="Selected work"
+        title="Case studies"
+        intro="A few recent engagements, written up honestly: the problem, the approach, and what the team was left with."
+    />
+
+    <section class="section section--flush-top">
+        <div class="container">
+            <div class="project-list">
+                {projects.map((project) => (
+                    <ProjectCard
+                        project={project}
+                        headingLevel={2}
+                    />
+                ))}
+            </div>
+
+            <p class="demo-note">
+                Demo content: the clients and results shown are fictional examples.
+            </p>
+        </div>
+    </section>
+
+    <CtaBanner/>
+</Layout>

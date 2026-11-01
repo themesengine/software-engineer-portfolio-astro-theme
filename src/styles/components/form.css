@@ -1,0 +1,184 @@
+/* Forms: fields, choices, errors, messages and the success panel. */
+
+.form-card {
+    padding: var(--space-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+}
+
+.form {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.form__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+}
+
+.form__field,
+.form__fieldset {
+    display: grid;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.form__fieldset {
+    padding: 0;
+    border: 0;
+}
+
+.form__label {
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+}
+
+.form__fieldset .form__label {
+    margin-bottom: var(--space-2);
+}
+
+.form__optional,
+.form__hint {
+    color: var(--color-text-subtle);
+    font-weight: 400;
+    font-size: var(--text-sm);
+}
+
+.form__input {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form__input:hover {
+    border-color: var(--color-text-subtle);
+}
+
+.form__input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.form__input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+}
+
+textarea.form__input {
+    resize: vertical;
+    line-height: var(--leading-normal);
+}
+
+select.form__input {
+    appearance: none;
+    padding-right: var(--space-10);
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
+        linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+    background-position:
+        calc(100% - 1.25rem) 55%,
+        calc(100% - 0.9rem) 55%;
+    background-size: 0.35rem 0.35rem;
+    background-repeat: no-repeat;
+}
+
+.form__choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+
+.form__choice {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-background);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.form__choice:hover {
+    border-color: var(--color-text-subtle);
+}
+
+.form__choice:has(input:checked) {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-soft);
+}
+
+.form__choice input {
+    accent-color: var(--color-accent);
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.form__error {
+    color: var(--color-danger);
+    font-size: var(--text-sm);
+}
+
+.form__message {
+    padding: var(--space-4);
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-danger-soft);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+}
+
+.form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+}
+
+.form__privacy {
+    flex: 1 1 16rem;
+    color: var(--color-text-subtle);
+    font-size: var(--text-xs);
+}
+
+.form__success {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    background-color: var(--color-accent-soft);
+}
+
+.form__success:focus {
+    outline: none;
+}
+
+.form__success-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+@media (max-width: 48rem) {
+    .form-card {
+        padding: var(--space-5);
+    }
+
+    .form__row,
+    .form__choices {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

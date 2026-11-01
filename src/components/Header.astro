@@ -1,0 +1,123 @@
+---
+import Logo from "@/components/Logo.astro";
+import {
+    announcement,
+    headerCta,
+    primaryNavigation
+} from "@/data/navigation";
+
+// Pages are built as "/about.html"; compare against "/about".
+const currentPath =
+    Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "") || "/";
+
+function isCurrent(href) {
+    return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+{announcement.enabled && (
+    <div class="announcement">
+        <div class="container announcement__inner">
+            <p>
+                {announcement.text}{" "}
+                <a href={announcement.href}>
+                    {announcement.linkLabel}
+                </a>
+            </p>
+        </div>
+    </div>
+)}
+
+<header
+    class="site-header"
+    data-site-header
+>
+    <div class="container site-header__inner">
+        <Logo/>
+
+        <nav
+            class="site-nav"
+            aria-label="Main"
+        >
+            <ul
+                class="site-nav__list"
+                role="list"
+            >
+                {primaryNavigation.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            class="site-nav__link"
+                            aria-current={isCurrent(item.href) ? "page" : undefined}
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+        <a
+            href={headerCta.href}
+            class="button button--small site-header__cta"
+            aria-current={isCurrent(headerCta.href) ? "page" : undefined}
+        >
+            {headerCta.label}
+        </a>
+
+        <button
+            type="button"
+            class="menu-toggle"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            data-menu-toggle
+        >
+            <span class="menu-toggle__bars" aria-hidden="true"></span>
+            <span class="visually-hidden">Open menu</span>
+        </button>
+    </div>
+
+    <div
+        id="mobile-menu"
+        class="mobile-menu"
+        hidden
+        data-mobile-menu
+    >
+        <nav
+            class="container mobile-menu__nav"
+            aria-label="Mobile"
+        >
+            <ul
+                class="mobile-menu__list"
+                role="list"
+            >
+                {primaryNavigation.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            class="mobile-menu__link"
+                            aria-current={isCurrent(item.href) ? "page" : undefined}
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+
+            <a
+                href={headerCta.href}
+                class="button mobile-menu__cta"
+            >
+                {headerCta.label}
+            </a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    import {
+        setupMenu
+    } from "@/scripts/menu";
+
+    setupMenu();
+</script>

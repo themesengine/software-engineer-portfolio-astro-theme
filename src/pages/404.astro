@@ -1,0 +1,43 @@
+---
+import {
+    primaryNavigation
+} from "@/data/navigation";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Page not found"
+    description="The page you were looking for could not be found."
+    noIndex
+>
+    <section class="error-page">
+        <div class="container container--narrow">
+            <p class="error-page__code">
+                HTTP/1.1 404 Not Found
+            </p>
+
+            <h1>This page doesn't exist</h1>
+
+            <p class="lead">
+                It may have moved, or the link may be mistyped. These pages might help:
+            </p>
+
+            <ul
+                class="error-page__links"
+                role="list"
+            >
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                {primaryNavigation.map((item) => (
+                    <li>
+                        <a href={item.href}>{item.label}</a>
+                    </li>
+                ))}
+                <li>
+                    <a href="/hire">Start a project</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</Layout>

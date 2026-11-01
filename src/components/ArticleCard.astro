@@ -1,0 +1,57 @@
+---
+import {
+    Image
+} from "astro:assets";
+
+import {
+    readingTime
+} from "@/lib/articles";
+import {
+    formatDate,
+    toIsoDate
+} from "@/lib/format";
+
+const {
+    article,
+    headingLevel = 3
+} = Astro.props;
+
+const Heading = `h${headingLevel}`;
+---
+
+<article class="article-card">
+    <div class="article-card__media">
+        <Image
+            src={article.data.image}
+            alt={article.data.imageAlt}
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 48rem) 100vw, (max-width: 64rem) 50vw, 360px"
+            class="article-card__image"
+        />
+    </div>
+
+    <div class="article-card__body">
+        <p class="article-card__meta">
+            <span class="article-card__category">{article.data.category}</span>
+            <span aria-hidden="true">·</span>
+            <time datetime={toIsoDate(article.data.publishedAt)}>
+                {formatDate(article.data.publishedAt, "short")}
+            </time>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime(article.body)}</span>
+        </p>
+
+        <Heading class="article-card__title">
+            <a
+                href={`/journal/${article.id}`}
+                class="article-card__link"
+            >
+                {article.data.title}
+            </a>
+        </Heading>
+
+        <p class="article-card__excerpt">
+            {article.data.excerpt}
+        </p>
+    </div>
+</article>

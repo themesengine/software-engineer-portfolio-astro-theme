@@ -1,0 +1,109 @@
+---
+import {
+    absoluteUrl,
+    site
+} from "@/data/site";
+import {
+    createSiteSchema,
+    serializeJsonLd
+} from "@/lib/json-ld";
+
+const {
+    title,
+    description,
+    image = site.defaultImage,
+    type = "website",
+    noIndex = false,
+    structuredData = null
+} = Astro.props;
+
+const pageTitle =
+    title ? `${title} | ${site.name}` : site.title;
+
+const pageDescription =
+    description || site.description;
+
+// `image` may be a public path ("/images/og.jpg") or an imported image.
+const socialImage =
+    absoluteUrl(typeof image === "string" ? image : image.src);
+
+// Prerendered pages are built as "about.html"; link to "/about".
+const canonicalUrl =
+    absoluteUrl(Astro.url.pathname.replace(/(?:\/index)?\.html$/, "") || "/");
+
+const isNoIndex =
+    noIndex || site.noIndex;
+
+const schemas = [
+    createSiteSchema(),
+    ...(Array.isArray(structuredData)
+        ? structuredData
+        : structuredData ? [structuredData] : [])
+];
+---
+
+<title>{pageTitle}</title>
+
+<meta
+    name="description"
+    content={pageDescription}
+/>
+
+{isNoIndex ? (
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    />
+) : (
+    <link
+        rel="canonical"
+        href={canonicalUrl}
+    />
+)}
+
+<meta
+    property="og:type"
+    content={type}
+/>
+
+<meta
+    property="og:site_name"
+    content={site.name}
+/>
+
+<meta
+    property="og:locale"
+    content={site.locale}
+/>
+
+<meta
+    property="og:url"
+    content={canonicalUrl}
+/>
+
+<meta
+    property="og:title"
+    content={pageTitle}
+/>
+
+<meta
+    property="og:description"
+    content={pageDescription}
+/>
+
+<meta
+    property="og:image"
+    content={socialImage}
+/>
+
+<meta
+    name="twitter:card"
+    content="summary_large_image"
+/>
+
+{schemas.map((schema) => (
+    <script
+        type="application/ld+json"
+        set:html={serializeJsonLd(schema)}
+    />
+))}

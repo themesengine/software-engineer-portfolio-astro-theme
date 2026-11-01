@@ -1,0 +1,276 @@
+---
+import {
+    Image
+} from "astro:assets";
+
+import ArticleCard from "@/components/ArticleCard.astro";
+import AvailabilityBadge from "@/components/AvailabilityBadge.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import {
+    clientNames,
+    highlights,
+    intro,
+    portrait,
+    principles
+} from "@/data/profile";
+import {
+    projects
+} from "@/data/projects";
+import {
+    services
+} from "@/data/services";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+import {
+    getArticles
+} from "@/lib/articles";
+
+const featuredProjects =
+    projects.filter((project) => project.featured).slice(0, 3);
+
+const latestArticles =
+    (await getArticles()).slice(0, 3);
+
+const testimonials =
+    projects.filter((project) => project.testimonial).slice(0, 3);
+---
+
+<Layout
+    description={site.description}
+>
+    <section class="home-hero">
+        <div class="container home-hero__inner">
+            <div class="home-hero__text">
+                <AvailabilityBadge/>
+
+                <p class="eyebrow">
+                    {intro.eyebrow}
+                </p>
+
+                <h1 class="home-hero__title">
+                    {intro.heading}
+                </h1>
+
+                <p class="lead">
+                    {intro.text}
+                </p>
+
+                <div class="home-hero__actions">
+                    <a
+                        href="/hire"
+                        class="button"
+                    >
+                        Start a project
+                    </a>
+
+                    <a
+                        href="/projects"
+                        class="button button--ghost"
+                    >
+                        See selected work
+                    </a>
+                </div>
+
+                <dl class="stats">
+                    {highlights.map((item) => (
+                        <div class="stats__item">
+                            <dt class="stats__label">{item.label}</dt>
+                            <dd class="stats__value">{item.value}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </div>
+
+            <div class="home-hero__visual">
+                <div class="terminal" aria-hidden="true">
+                    <div class="terminal__bar">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <pre class="terminal__body"><code><span class="terminal__prompt">$</span> whoami
+{site.name.toLowerCase().replace(/\s+/g, "-")} — {site.jobTitle.toLowerCase()}
+
+<span class="terminal__prompt">$</span> cat focus.txt
+{site.expertise.slice(0, 4).join("\n")}
+
+<span class="terminal__prompt">$</span> status --availability
+<span class="terminal__accent">{site.availability.open ? "open to new projects" : "fully booked"}</span><span class="terminal__cursor"></span></code></pre>
+                </div>
+
+                <Image
+                    src={portrait.image}
+                    alt={portrait.alt}
+                    widths={[320, 480, 640]}
+                    sizes="(max-width: 64rem) 40vw, 260px"
+                    class="home-hero__portrait"
+                    loading="eager"
+                    fetchpriority="high"
+                />
+            </div>
+        </div>
+    </section>
+
+    {clientNames.length > 0 && (
+        <section
+            class="clients"
+            aria-label="Selected clients"
+        >
+            <div class="container clients__inner">
+                <p class="clients__label">Trusted by teams at</p>
+
+                <ul
+                    class="clients__list"
+                    role="list"
+                >
+                    {clientNames.map((name) => (
+                        <li class="clients__name">{name}</li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+    )}
+
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Selected work</p>
+                    <h2>Systems that have to work, built to last</h2>
+                </div>
+
+                <a
+                    href="/projects"
+                    class="text-link"
+                >
+                    All projects <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="project-list">
+                {featuredProjects.map((project) => (
+                    <ProjectCard project={project}/>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--surface">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Services</p>
+                    <h2>How I can help</h2>
+                    <p class="section__intro">
+                        Four ways to work together, from a fixed-price audit to months embedded in your team.
+                    </p>
+                </div>
+
+                <a
+                    href="/services"
+                    class="text-link"
+                >
+                    Compare services <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="grid grid--4">
+                {services.map((service) => (
+                    <ServiceCard service={service}/>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container split">
+            <div class="section__heading">
+                <p class="eyebrow">How I work</p>
+                <h2>Calm delivery, no heroics</h2>
+                <p class="section__intro">
+                    Good engineering is mostly a set of habits. These are the ones every engagement is built on.
+                </p>
+
+                <a
+                    href="/about"
+                    class="text-link"
+                >
+                    More about me <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <ol
+                class="principles"
+                role="list"
+            >
+                {principles.map((principle, index) => (
+                    <li class="principles__item">
+                        <span class="principles__number">{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                            <h3 class="principles__title">{principle.title}</h3>
+                            <p class="principles__text">{principle.text}</p>
+                        </div>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    {testimonials.length > 0 && (
+        <section class="section section--surface">
+            <div class="container">
+                <div class="section__header">
+                    <div class="section__heading">
+                        <p class="eyebrow">Kind words</p>
+                        <h2>What clients say</h2>
+                    </div>
+                </div>
+
+                <div class="grid grid--3">
+                    {testimonials.map((project) => (
+                        <figure class="quote-card">
+                            <blockquote class="quote-card__quote">
+                                <p>“{project.testimonial.quote}”</p>
+                            </blockquote>
+                            <figcaption class="quote-card__author">
+                                {project.testimonial.author}
+                            </figcaption>
+                        </figure>
+                    ))}
+                </div>
+
+                <p class="demo-note">
+                    Demo content: client names, quotes and figures on this site are fictional.
+                </p>
+            </div>
+        </section>
+    )}
+
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Writing</p>
+                    <h2>Notes from the work</h2>
+                </div>
+
+                <a
+                    href="/journal"
+                    class="text-link"
+                >
+                    All articles <span aria-hidden="true">→</span>
+                </a>
+            </div>
+
+            <div class="grid grid--3">
+                {latestArticles.map((article) => (
+                    <ArticleCard article={article}/>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <CtaBanner/>
+</Layout>

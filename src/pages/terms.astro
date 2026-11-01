@@ -1,0 +1,69 @@
+---
+import LegalNotice from "@/components/LegalNotice.astro";
+import PageHero from "@/components/PageHero.astro";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Terms of use"
+    description={`Terms for using the ${site.name} website and its content.`}
+>
+    <PageHero
+        eyebrow="Legal"
+        title="Terms of use"
+    >
+        <LegalNotice/>
+    </PageHero>
+
+    <section class="section section--flush-top">
+        <div class="container container--narrow prose">
+            <h2>About these terms</h2>
+            <p>
+                These terms apply to your use of this website, run by {site.legalName}. They don't cover
+                client engagements, which are always governed by a separate written agreement.
+            </p>
+
+            <h2>Using the website</h2>
+            <p>
+                You may read, share and link to the content on this website for personal and non-commercial
+                purposes. Please don't use the forms to send spam, malware or unlawful content, or try to
+                disrupt the website or its servers.
+            </p>
+
+            <h2>Articles and code samples</h2>
+            <p>
+                Articles reflect my own experience and opinions at the time of writing. Code samples are
+                provided as examples, without warranty; test them before using them in production. Unless
+                stated otherwise, you may reuse short code snippets in your own projects.
+            </p>
+
+            <h2>Case studies</h2>
+            <p>
+                Case studies are published with the permission of the clients involved. Client names and
+                trademarks belong to their owners.
+            </p>
+
+            <h2>Accuracy and availability</h2>
+            <p>
+                I try to keep the website accurate and available, but I can't guarantee it will always be
+                complete, current or free from interruptions. Prices and availability shown are a guide and
+                are confirmed in a written proposal.
+            </p>
+
+            <h2>Liability</h2>
+            <p>
+                Nothing in these terms limits liability that cannot be limited by law. Otherwise, I'm not
+                liable for losses arising from your use of this website or reliance on its content.
+            </p>
+
+            <h2>Law</h2>
+            <p>
+                These terms are governed by the laws of England and Wales. Questions? Email{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a>.
+            </p>
+        </div>
+    </section>
+</Layout>

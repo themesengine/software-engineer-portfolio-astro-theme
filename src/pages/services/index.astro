@@ -1,0 +1,79 @@
+---
+import CtaBanner from "@/components/CtaBanner.astro";
+import PageHero from "@/components/PageHero.astro";
+import ServiceIcon from "@/components/ServiceIcon.astro";
+import {
+    services
+} from "@/data/services";
+import Layout from "@/layouts/Layout.astro";
+import {
+    formatPrice
+} from "@/lib/format";
+---
+
+<Layout
+    title="Services"
+    description="Product engineering, platform and API work, technical audits and fractional tech leadership for small and growing teams."
+>
+    <PageHero
+        eyebrow="Services"
+        title="Ways to work together"
+        intro="Every engagement is scoped in writing before it starts, with a clear price and a clear definition of done."
+    />
+
+    <section class="section section--flush-top">
+        <div class="container service-list">
+            {services.map((service) => (
+                <article class="service-row">
+                    <span class="service-row__icon">
+                        <ServiceIcon name={service.icon}/>
+                    </span>
+
+                    <div class="service-row__main">
+                        <h2 class="service-row__title">
+                            <a href={`/services/${service.slug}`}>
+                                {service.title}
+                            </a>
+                        </h2>
+
+                        <p class="service-row__intro">
+                            {service.intro}
+                        </p>
+
+                        <ul
+                            class="check-list"
+                            role="list"
+                        >
+                            {service.includes.slice(0, 3).map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div class="service-row__side">
+                        {service.priceFrom && (
+                            <p class="service-row__price">
+                                <span class="service-row__price-label">From</span>{" "}
+                                {formatPrice(service.priceFrom)}{" "}
+                                <span class="service-row__price-label">{service.priceUnit}</span>
+                            </p>
+                        )}
+
+                        <a
+                            href={`/services/${service.slug}`}
+                            class="button button--ghost button--small"
+                        >
+                            Details<span class="visually-hidden">: {service.title}</span>
+                        </a>
+                    </div>
+                </article>
+            ))}
+
+            <p class="demo-note">
+                Prices are demo content. Set your own in src/data/services.js.
+            </p>
+        </div>
+    </section>
+
+    <CtaBanner/>
+</Layout>

@@ -1,0 +1,15 @@
+.git
+.github
+.idea
+.vscode
+.astro
+dist
+node_modules
+documentation
+npm-debug.log*
+yarn-error.log*
+.env*
+!.env.example
+Dockerfile
+.dockerignore
+docker-compose*.yml

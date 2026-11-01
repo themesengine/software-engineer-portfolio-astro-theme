@@ -1,0 +1,75 @@
+---
+import AvailabilityBadge from "@/components/AvailabilityBadge.astro";
+import EnquiryForm from "@/components/EnquiryForm.astro";
+import PageHero from "@/components/PageHero.astro";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+
+const steps = [
+    {
+        title: "You send the form",
+        text: "A few sentences about the project are plenty. No brief or spec needed."
+    },
+    {
+        title: "I reply within two working days",
+        text: "With questions, or a suggested time for a free 30-minute call."
+    },
+    {
+        title: "A written proposal",
+        text: "Scope, approach, timeline as a range, and a fixed or monthly price."
+    }
+];
+---
+
+<Layout
+    title="Start a project"
+    description={`Tell ${site.name} about your project: product builds, APIs and integrations, technical audits or fractional tech leadership.`}
+>
+    <PageHero
+        eyebrow="Hire me"
+        title="Start a project"
+        intro="Tell me what you're building and where you're stuck. I'll reply with honest next steps, even if I'm not the right fit."
+    >
+        <AvailabilityBadge/>
+    </PageHero>
+
+    <section class="section section--flush-top">
+        <div class="container split split--sidebar">
+            <div class="form-card">
+                <EnquiryForm/>
+            </div>
+
+            <aside class="hire-aside">
+                <h2 class="section-title">What happens next</h2>
+
+                <ol
+                    class="steps"
+                    role="list"
+                >
+                    {steps.map((step, index) => (
+                        <li class="steps__item">
+                            <span class="steps__number">{index + 1}</span>
+                            <div>
+                                <h3 class="steps__title">{step.title}</h3>
+                                <p class="steps__text">{step.text}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+
+                <div class="panel">
+                    <p class="panel__text">
+                        {site.availability.note}
+                    </p>
+
+                    <p class="panel__text">
+                        Prefer email? Write to{" "}
+                        <a href={`mailto:${site.email}`}>{site.email}</a>.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </section>
+</Layout>

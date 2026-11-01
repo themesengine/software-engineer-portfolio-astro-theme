@@ -1,0 +1,50 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import PageHero from "@/components/PageHero.astro";
+import Layout from "@/layouts/Layout.astro";
+import {
+    getArticles
+} from "@/lib/articles";
+
+const articles = await getArticles();
+
+// The newest featured article leads the page; the rest follow in order.
+const lead =
+    articles.find((article) => article.data.featured) || articles[0];
+
+const rest =
+    articles.filter((article) => article.id !== lead?.id);
+---
+
+<Layout
+    title="Writing"
+    description="Articles on software engineering, reliable systems, estimating and working with product teams."
+>
+    <PageHero
+        eyebrow="Writing"
+        title="Notes from the work"
+        intro="Practical writing on building dependable software and working well with the people who use it."
+    />
+
+    <section class="section section--flush-top">
+        <div class="container">
+            {lead && (
+                <div class="journal-lead">
+                    <ArticleCard
+                        article={lead}
+                        headingLevel={2}
+                    />
+                </div>
+            )}
+
+            <div class="grid grid--3">
+                {rest.map((article) => (
+                    <ArticleCard
+                        article={article}
+                        headingLevel={2}
+                    />
+                ))}
+            </div>
+        </div>
+    </section>
+</Layout>

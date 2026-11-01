@@ -1,0 +1,230 @@
+---
+import {
+    Image
+} from "astro:assets";
+
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import {
+    projects
+} from "@/data/projects";
+import {
+    getService
+} from "@/data/services";
+import Layout from "@/layouts/Layout.astro";
+import {
+    createBreadcrumbSchema
+} from "@/lib/json-ld";
+
+export function getStaticPaths() {
+    return projects.map((project) => ({
+        params: {
+            slug: project.slug
+        },
+        props: {
+            project
+        }
+    }));
+}
+
+const {
+    project
+} = Astro.props;
+
+const path = `/projects/${project.slug}`;
+
+const breadcrumbs = [
+    {
+        label: "Home",
+        href: "/"
+    },
+    {
+        label: "Work",
+        href: "/projects"
+    },
+    {
+        label: project.shortTitle,
+        href: path
+    }
+];
+
+const relatedServices =
+    project.services.map(getService).filter(Boolean);
+
+// Projects sharing a service first, then the rest.
+const others =
+    projects.filter((candidate) => candidate.slug !== project.slug);
+
+const relatedProjects = [
+    ...others.filter((candidate) => candidate.services.some((slug) => project.services.includes(slug))),
+    ...others.filter((candidate) => !candidate.services.some((slug) => project.services.includes(slug)))
+].slice(0, 2);
+---
+
+<Layout
+    title={project.shortTitle}
+    description={project.summary}
+    image={project.image}
+    type="article"
+    structuredData={createBreadcrumbSchema(breadcrumbs)}
+>
+    <Breadcrumbs items={breadcrumbs}/>
+
+    <article class="case-study">
+        <header class="case-study__header">
+            <div class="container">
+                <p class="eyebrow">
+                    {project.client} · {project.sector}
+                </p>
+
+                <h1 class="case-study__title">
+                    {project.title}
+                </h1>
+
+                <p class="lead">
+                    {project.summary}
+                </p>
+
+                <dl class="case-study__facts">
+                    <div>
+                        <dt>Role</dt>
+                        <dd>{project.role}</dd>
+                    </div>
+                    <div>
+                        <dt>Year</dt>
+                        <dd>{project.year}</dd>
+                    </div>
+                    <div>
+                        <dt>Duration</dt>
+                        <dd>{project.duration}</dd>
+                    </div>
+                    <div>
+                        <dt>Stack</dt>
+                        <dd>{project.stack.join(", ")}</dd>
+                    </div>
+                </dl>
+            </div>
+        </header>
+
+        <div class="container">
+            <Image
+                src={project.image}
+                alt={project.imageAlt}
+                widths={[640, 1024, 1440]}
+                sizes="(max-width: 72rem) 100vw, 1152px"
+                class="case-study__image"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </div>
+
+        <section
+            class="section"
+            aria-labelledby="outcomes-heading"
+        >
+            <div class="container">
+                <h2
+                    id="outcomes-heading"
+                    class="visually-hidden"
+                >
+                    Outcomes
+                </h2>
+
+                <ul
+                    class="outcomes"
+                    role="list"
+                >
+                    {project.outcomes.map((outcome) => (
+                        <li class="outcomes__item">
+                            <span class="outcomes__value">{outcome.value}</span>
+                            <span class="outcomes__label">{outcome.label}</span>
+                        </li>
+                    ))}
+                </ul>
+
+                <p class="demo-note">
+                    Demo content: replace these figures with your own, verifiable results.
+                </p>
+            </div>
+        </section>
+
+        <div class="container split split--sidebar case-study__content">
+            <div class="prose">
+                <h2>The challenge</h2>
+                {project.challenge.map((paragraph) => (
+                    <p>{paragraph}</p>
+                ))}
+
+                <h2>The approach</h2>
+                <ul>
+                    {project.approach.map((step) => (
+                        <li>{step}</li>
+                    ))}
+                </ul>
+
+                <h2>The result</h2>
+                <p>{project.result}</p>
+
+                {project.testimonial && (
+                    <blockquote>
+                        <p>“{project.testimonial.quote}”</p>
+                        <p>— {project.testimonial.author}</p>
+                    </blockquote>
+                )}
+            </div>
+
+            <aside class="case-study__aside">
+                <div class="panel">
+                    <h2 class="panel__title">Services used</h2>
+
+                    <ul
+                        class="panel__list"
+                        role="list"
+                    >
+                        {relatedServices.map((service) => (
+                            <li>
+                                <a href={`/services/${service.slug}`}>
+                                    {service.title}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {project.url && (
+                        <a
+                            href={project.url}
+                            class="button button--ghost button--small"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            Visit the live site
+                            <span class="visually-hidden"> (opens in a new tab)</span>
+                        </a>
+                    )}
+                </div>
+            </aside>
+        </div>
+    </article>
+
+    {relatedProjects.length > 0 && (
+        <section class="section">
+            <div class="container">
+                <div class="section__header">
+                    <div class="section__heading">
+                        <p class="eyebrow">More work</p>
+                        <h2>Related projects</h2>
+                    </div>
+                </div>
+
+                <div class="project-list">
+                    {relatedProjects.map((related) => (
+                        <ProjectCard project={related}/>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <CtaBanner title="Need something similar?"/>
+</Layout>

@@ -1,0 +1,96 @@
+/* Services list and service detail pages. */
+
+.service-list {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.service-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-8);
+    align-items: start;
+    padding: var(--space-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+}
+
+.service-row__main {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.service-row__title {
+    font-size: var(--text-2xl);
+}
+
+.service-row__title a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.service-row__title a:hover {
+    color: var(--color-accent);
+}
+
+.service-row__intro {
+    color: var(--color-text-muted);
+}
+
+.service-row__side {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: end;
+    text-align: right;
+}
+
+.service-row__price {
+    display: grid;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+}
+
+.service-row__price-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    color: var(--color-text-subtle);
+}
+
+.service-detail__ideal {
+    margin-top: var(--space-8);
+    padding: var(--space-5);
+    border-left: 3px solid var(--color-accent);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+}
+
+.service-detail__ideal strong {
+    color: var(--color-text);
+}
+
+@media (max-width: 64rem) {
+    .service-row {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .service-row__side {
+        grid-column: 2;
+        justify-items: start;
+        text-align: left;
+    }
+}
+
+@media (max-width: 48rem) {
+    .service-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-5);
+        padding: var(--space-5);
+    }
+
+    .service-row__side {
+        grid-column: auto;
+    }
+}
