@@ -314,13 +314,58 @@ Write your article in Markdown. Code blocks are highlighted automatically.</code
         </table>
 
         <h2 id="deployment">Deployment</h2>
-        <p>Deploy as a Node app or Docker container: the forms need the included server. Always set <code>PUBLIC_SITE_URL</code> to your HTTPS domain at build time; the server then trusts forwarded headers from that domain only, which keeps rate limiting accurate behind a proxy.</p>
+        <p>The pages are static, but the forms and <code>/api/health</code> need a server. Node and container hosts run the included server unchanged, so they're the simplest choice. Serverless hosts need a different Astro adapter, which takes a few small changes. A static-only host won't run the forms.</p>
+        <table>
+            <thead>
+                <tr><th>Platform</th><th>How it runs</th><th>Code changes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>DigitalOcean App Platform, Render, Railway, Fly.io, VPS</td><td>Node server or container</td><td>None</td></tr>
+                <tr><td>Vercel, Netlify, Cloudflare Workers</td><td>Serverless functions</td><td><a href="#serverless">Swap the adapter</a></td></tr>
+            </tbody>
+        </table>
+        <p>Always set <code>PUBLIC_SITE_URL</code> to your HTTPS domain at build time, and rebuild if it changes; the server then trusts forwarded headers from that domain only, which keeps rate limiting accurate behind a proxy. Configure a <a href="#forms">form transport</a> as well, or production forms will return an error.</p>
+        <h3>DigitalOcean App Platform</h3>
+        <p>App Platform builds the included <code>Dockerfile</code>, so no code changes are needed. Choose a Web Service, not a Static Site, because the forms need the server.</p>
+        <ol>
+            <li>Push the theme to GitHub, then choose <strong>Create App</strong> in DigitalOcean and select your repository and branch. App Platform uses the <code>Dockerfile</code> in the repository root automatically.</li>
+            <li>Set the service's HTTP port to <code>3000</code>.</li>
+            <li>Set the health check path to <code>/api/health</code>.</li>
+            <li>Add <code>PUBLIC_SITE_URL</code> with the scope <strong>Run and build time</strong>. It's passed to the Docker build as a build argument.</li>
+            <li>Add your form variables with the scope <strong>Run time</strong>, and encrypt secrets such as <code>RESEND_API_KEY</code>.</li>
+            <li>Deploy, then add your domain in the app's settings. If you started with the <code>ondigitalocean.app</code> address, update <code>PUBLIC_SITE_URL</code> and deploy again.</li>
+        </ol>
+        <p>To keep the same setup in a file, save this as <code>.do/app.yaml</code> and run <code>doctl apps create --spec .do/app.yaml</code>:</p>
+        <div class="code"><pre><code>name: portfolio
+services:
+  - name: web
+    github:
+      repo: your-account/your-repository
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    http_port: 3000
+    health_check:
+      http_path: /api/health
+    envs:
+      - key: PUBLIC_SITE_URL
+        value: https://www.your-domain.com
+        scope: RUN_AND_BUILD_TIME
+      - key: RESEND_API_KEY
+        scope: RUN_TIME
+        type: SECRET
+        value: replace-me
+      - key: FORM_EMAIL_TO
+        scope: RUN_TIME
+        value: you@your-domain.com
+      - key: FORM_EMAIL_FROM
+        scope: RUN_TIME
+        value: Your Name &lt;web@your-domain.com&gt;</code></pre></div>
+        <p>Don't commit a real secret to this file. Keep the placeholder and set the value in the dashboard. If the build fails on <code>/var/run</code>, DigitalOcean's fix for Alpine images is to add <code>RUN test -e /var/run || ln -s /run /var/run</code> to the <code>Dockerfile</code>.</p>
         <h3>Render</h3>
         <p>New Web Service → connect the repository → Build command <code>yarn install --frozen-lockfile &amp;&amp; yarn build</code>, Start command <code>yarn start</code>. Add environment variables, including <code>HOST=0.0.0.0</code>. Render sets <code>PORT</code>.</p>
         <h3>Railway</h3>
         <p>New project from the repository. Railway detects the Dockerfile; add <code>PUBLIC_SITE_URL</code> as a variable (it's passed as a build argument) and your form variables.</p>
-        <h3>DigitalOcean App Platform</h3>
-        <p>Create an app from the repository, choose the Dockerfile, set the HTTP port to 3000 and add the environment variables (mark <code>PUBLIC_SITE_URL</code> as available at build time).</p>
         <h3>Fly.io</h3>
         <div class="code"><pre><code>fly launch --no-deploy
 fly secrets set RESEND_API_KEY=... FORM_EMAIL_TO=... FORM_EMAIL_FROM=...
@@ -347,6 +392,96 @@ HOST=127.0.0.1 PORT=3000 yarn start   # run under systemd or pm2</code></pre></d
         <div class="code"><pre><code>docker build --build-arg PUBLIC_SITE_URL=https://www.your-domain.com -t portfolio .
 docker run -d -p 3000:3000 --env-file .env --restart unless-stopped portfolio</code></pre></div>
         <p>Or with Compose: fill in <code>.env</code>, then <code>docker compose up -d --build</code>. The container reports its health through <code>/api/health</code>.</p>
+
+        <h3 id="serverless">Serverless platforms</h3>
+        <p>Vercel, Netlify and Cloudflare don't run <code>server.mjs</code>, so each one needs its own Astro adapter. Replace the Node adapter in <code>astro.config.mjs</code>, including its options, as shown in the guide for your platform. <code>yarn start</code> and <code>server.mjs</code> then no longer apply.</p>
+        <p class="note">
+            <strong>What changes on serverless:</strong> the security headers in <code>server.mjs</code> no longer apply, so each guide adds them another way. The 64 KB form size limit is gone, and the host's own limit applies instead. Rate limiting is kept in memory, so each function instance counts separately and it's much weaker. If the forms attract abuse, add the platform's firewall or rate-limiting rules.
+        </p>
+        <h3>Vercel</h3>
+        <div class="code"><pre><code>yarn remove @astrojs/node
+yarn add @astrojs/vercel</code></pre></div>
+        <p>In <code>astro.config.mjs</code>:</p>
+        <div class="code"><pre><code>import vercel from "@astrojs/vercel";
+
+// Replace the existing adapter: node({ ... }) block with:
+adapter: vercel(),</code></pre></div>
+        <p>Add a <code>vercel.json</code> file for the security headers:</p>
+        <div class="code"><pre><code>{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()" }
+      ]
+    }
+  ]
+}</code></pre></div>
+        <p>Commit and push, then import the repository in Vercel, which detects Astro automatically. Add <code>PUBLIC_SITE_URL</code> and your form variables under Environment Variables, deploy, and redeploy after changing <code>PUBLIC_SITE_URL</code>. Check that your Vercel plan's terms cover your use if the site promotes paid work.</p>
+        <h3>Netlify</h3>
+        <div class="code"><pre><code>yarn remove @astrojs/node
+yarn add @astrojs/netlify</code></pre></div>
+        <p>In <code>astro.config.mjs</code>:</p>
+        <div class="code"><pre><code>import netlify from "@astrojs/netlify";
+
+// Replace the existing adapter: node({ ... }) block with:
+adapter: netlify(),</code></pre></div>
+        <p>Add a <code>netlify.toml</code> file for the build settings and security headers:</p>
+        <div class="code"><pre><code>[build]
+  command = "yarn build"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()"</code></pre></div>
+        <p>Commit and push, then import the repository in Netlify. Add <code>PUBLIC_SITE_URL</code> and your form variables in the site's environment variables, then deploy. Netlify reads the Node version from <code>.nvmrc</code>. Open <code>/projects</code>, <code>/services</code> and <code>/journal</code> after the first deploy: each of these is both a page and a folder in the build output. If one returns a 404, set <code>build.format</code> to <code>"directory"</code> in <code>astro.config.mjs</code>.</p>
+        <h3>Cloudflare Workers</h3>
+        <p>Use Workers, as the Astro adapter no longer supports Cloudflare Pages.</p>
+        <div class="code"><pre><code>yarn remove @astrojs/node
+yarn add @astrojs/cloudflare
+yarn add -D wrangler</code></pre></div>
+        <p>In <code>astro.config.mjs</code>, use the <code>compile</code> image service, which optimises images during the build:</p>
+        <div class="code"><pre><code>import cloudflare from "@astrojs/cloudflare";
+
+// Replace the existing adapter: node({ ... }) block with:
+adapter: cloudflare({
+    imageService: "compile"
+}),</code></pre></div>
+        <p>Add a <code>wrangler.jsonc</code> file. The <code>nodejs_compat</code> flag lets the forms read their settings from <code>process.env</code>, and it needs a recent compatibility date:</p>
+        <div class="code"><pre><code>{
+  "name": "portfolio",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"]
+}</code></pre></div>
+        <p>Add a <code>public/_headers</code> file for the security headers. Cloudflare applies it to static files but not to responses from the Worker, such as the form APIs:</p>
+        <div class="code"><pre><code>/*
+  Strict-Transport-Security: max-age=63072000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), browsing-topics=()</code></pre></div>
+        <p>Set your form variables, then build and deploy. <code>PUBLIC_SITE_URL</code> must be set in the build command because it's read at build time:</p>
+        <div class="code"><pre><code>yarn wrangler secret put RESEND_API_KEY
+yarn wrangler secret put FORM_EMAIL_TO
+yarn wrangler secret put FORM_EMAIL_FROM
+PUBLIC_SITE_URL=https://www.your-domain.com yarn build
+yarn wrangler deploy</code></pre></div>
+        <h3>After you deploy</h3>
+        <ul>
+            <li>Open <code>/api/health</code>, which should return <code>{"status":"ok"}</code>.</li>
+            <li>Send a test message through <code>/contact</code> and <code>/hire</code>, and confirm it arrives.</li>
+            <li>Check that <code>/sitemap.xml</code> uses your domain, not <code>localhost</code>.</li>
+            <li>Run <code>curl -I https://www.your-domain.com</code> to confirm the security headers are present.</li>
+        </ul>
 
         <h2 id="seo">SEO and staging</h2>
         <ul>

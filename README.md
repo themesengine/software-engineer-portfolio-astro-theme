@@ -87,7 +87,22 @@ Without a webhook or email transport, a production server answers form submissio
 
 ## Deployment
 
-The pages are static, but the forms and `/api/health` run on the included Node server, so deploy it as a Node app or container. A plain static host only works if you point the forms at a form service yourself.
+The pages are static, but the forms and `/api/health` need a server. Node and container hosts run the included server unchanged, while serverless hosts need a different Astro adapter. A plain static host only works if you point the forms at a form service yourself.
+
+| Platform | How it runs | Code changes |
+|---|---|---|
+| DigitalOcean App Platform, Render, Railway, Fly.io, VPS | Node server or container | None |
+| Vercel, Netlify, Cloudflare Workers | Serverless functions | Swap the adapter and add security headers |
+
+Step-by-step guides for each platform are in the Deployment section of `documentation/index.html`.
+
+### DigitalOcean App Platform
+
+Create a Web Service from your repository, which builds the included `Dockerfile`. Set the HTTP port to `3000` and the health check path to `/api/health`. Add `PUBLIC_SITE_URL` with the scope **Run and build time**, and your form variables with the scope **Run time**.
+
+### Vercel, Netlify and Cloudflare
+
+Replace `@astrojs/node` with [`@astrojs/vercel`](https://docs.astro.build/en/guides/integrations-guide/vercel/), [`@astrojs/netlify`](https://docs.astro.build/en/guides/integrations-guide/netlify/) or [`@astrojs/cloudflare`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/), then update `adapter` in `astro.config.mjs`. `server.mjs` doesn't run on these platforms, so add its security headers through the platform's config. Rate limiting is also much weaker, because it's kept in memory for each function instance.
 
 ### Node
 
@@ -110,7 +125,7 @@ cp .env.example .env   # fill in PUBLIC_SITE_URL and a form transport
 docker compose up -d --build
 ```
 
-See `documentation/index.html` for Render, Railway, DigitalOcean App Platform, Fly.io and VPS (Nginx or Caddy) guides.
+See `documentation/index.html` for all platform guides, including Render, Railway, Fly.io and VPS (Nginx or Caddy).
 
 ## Project structure
 

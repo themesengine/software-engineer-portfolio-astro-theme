@@ -11,6 +11,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Optional "Theme by ThemesEngine" footer credit, controlled by `showThemeCredit` in `src/data/site.js`.
 - Contributing guide, security policy, and issue and pull request templates.
+- Deployment guides for Vercel, Netlify and Cloudflare Workers, and a fuller DigitalOcean App Platform guide.
 
 ### Changed
 
