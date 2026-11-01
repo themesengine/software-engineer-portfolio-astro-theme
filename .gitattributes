@@ -1,4 +1,4 @@
-# Files excluded from the buyer package created by `yarn package`
+# Files excluded from the release archive created by `yarn run package`
 # (git archive honours export-ignore).
 .github                  export-ignore
 .gitattributes           export-ignore

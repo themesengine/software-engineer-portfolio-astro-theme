@@ -181,7 +181,7 @@
 
         <h2 id="requirements">Requirements</h2>
         <ul>
-            <li>Node.js 22.23.4 or newer. Version 24 is recommended (see <code>.nvmrc</code>).</li>
+            <li>Node.js <code>^22.23.4</code>, <code>^24.16.0</code> or <code>&gt;=26.3.0</code>. Version 24 is recommended (see <code>.nvmrc</code>).</li>
             <li>Yarn 1, enabled with Corepack (bundled with Node).</li>
             <li>For production: any host that runs Node or Docker containers.</li>
         </ul>
@@ -387,8 +387,9 @@ docker run -d -p 3000:3000 --env-file .env --restart unless-stopped portfolio</c
         <p>Keep your content in <code>src/data/</code>, <code>src/content/</code> and <code>src/assets/</code>, and your design changes in <code>src/styles/tokens.css</code> where possible; that keeps updates simple. Read <code>CHANGELOG.md</code> for each new version, compare the changed files and apply them with Git. Run <code>yarn run check</code> after updating.</p>
 
         <h2 id="support">Support and credits</h2>
-        <p>For help, contact ThemesEngine support through the marketplace where you bought the theme, with your version number and steps to reproduce the problem.</p>
-        <p>Built with Astro and the Astro Node adapter. Fonts: Space Grotesk and Inter (SIL Open Font License). Images are original abstract artwork made for this theme. See <code>LICENSE.md</code> for the full list.</p>
+        <p>For help, <a href="https://github.com/themesengine/software-engineer-portfolio-theme/issues">open an issue on GitHub</a> with your version number and steps to reproduce the problem.</p>
+        <p>The theme is open source under the MIT License (see <code>LICENSE.md</code>). The footer's "Built with" credit is optional: set <code>showThemeCredit</code> to <code>false</code> in <code>src/data/site.js</code> to remove it.</p>
+        <p>Built with Astro and the Astro Node adapter. Fonts: Space Grotesk and Inter (SIL Open Font License). Images are original abstract artwork made for this theme. See the Credits section of <code>README.md</code> for the full list.</p>
         <p>Possible extensions, not included: analytics, a CMS, multiple languages, or a light colour scheme.</p>
     </main>
 </div>

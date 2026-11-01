@@ -1,7 +1,7 @@
 /*
  * Central site configuration.
  *
- * Most buyers only need to edit this file to rebrand the theme: the
+ * Most sites only need to edit this file to rebrand the theme: the
  * name, contact details, SEO defaults, and structured data (Schema.org
  * JSON-LD) are all generated from these values.
  */
@@ -78,6 +78,10 @@ export const site = {
     // Shows a "demonstration content" notice on the legal pages. Set to
     // false once your legal content has been reviewed.
     showDemoContentNotice: true,
+
+    // Shows a small "Built with" link to the theme in the footer. It's
+    // optional: set to false to remove it.
+    showThemeCredit: true,
 
     // Date shown on the privacy, terms and cookie pages (YYYY-MM-DD).
     legalUpdatedAt: "2026-11-01"

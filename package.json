@@ -3,7 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A premium Astro website theme for software engineer portfolios.",
+  "description": "A free, open source Astro portfolio theme for software engineers, consultants and small dev studios.",
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "portfolio",
+    "portfolio-template",
+    "developer-portfolio",
+    "software-engineer",
+    "freelancer",
+    "dark-theme"
+  ],
+  "homepage": "https://github.com/themesengine/software-engineer-portfolio-theme#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themesengine/software-engineer-portfolio-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/themesengine/software-engineer-portfolio-theme/issues"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -26,6 +44,6 @@
     "node": "^22.23.4 || ^24.16.0 || >=26.3.0"
   },
   "packageManager": "yarn@1.22.22",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "MIT",
   "author": "ThemesEngine"
 }

@@ -1,5 +1,5 @@
-# Used for the public ThemesEngine demo only (excluded from the buyer
-# package). Buyers use docker-compose.yml instead.
+# Used for the public ThemesEngine demo only (excluded from the release
+# archive). Use docker-compose.yml for your own site.
 services:
   software-engineer-portfolio-astro-theme-demo:
     image: ghcr.io/themesengine/software-engineer-portfolio-astro-theme:latest

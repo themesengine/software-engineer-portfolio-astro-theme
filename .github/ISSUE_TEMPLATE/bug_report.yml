@@ -1,0 +1,39 @@
+name: Bug report
+description: Something in the theme doesn't work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Include what you expected to happen, plus any error output or screenshots.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `yarn dev`
+        2. Open `/hire`
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: theme-version
+    attributes:
+      label: Theme version or commit
+    validations:
+      required: true
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: Output of `node -v`
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and hosting, if relevant
+      placeholder: Firefox 140, Docker on a VPS

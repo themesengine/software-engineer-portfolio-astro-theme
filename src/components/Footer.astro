@@ -111,6 +111,12 @@ const year = new Date().getFullYear();
         <div class="site-footer__bottom">
             <p>
                 © {year} {site.legalName}
+                {site.showThemeCredit && (
+                    <>
+                        {" · "}Built with
+                        {" "}<a href="https://github.com/themesengine/software-engineer-portfolio-theme" rel="noopener">Software Engineer Portfolio</a>
+                    </>
+                )}
             </p>
 
             <ul

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Builds the buyer download: dist/<name>-v<version>.zip
+# Builds the release archive: dist/<name>-v<version>.zip
 #
 # The archive is created from the committed HEAD with `git archive`, so
 # uncommitted changes and git-ignored files are never shipped. Demo-only

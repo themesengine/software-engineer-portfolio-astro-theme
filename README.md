@@ -1,8 +1,16 @@
-# Software Engineer Portfolio, an Astro theme by ThemesEngine
+# Software Engineer Portfolio: a free Astro theme
 
-A dark, technical portfolio and landing-page theme for independent software engineers, consultants and small dev studios. It covers case studies, services, writing and a project enquiry form that delivers to your inbox.
+[![License: MIT](https://img.shields.io/badge/License-MIT-3ddc84.svg)](LICENSE.md)
+[![CI](https://github.com/themesengine/software-engineer-portfolio-theme/actions/workflows/ci.yml/badge.svg)](https://github.com/themesengine/software-engineer-portfolio-theme/actions/workflows/ci.yml)
+[![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-ff5d01.svg)](https://astro.build)
+
+A dark, technical, open source portfolio and landing-page theme for independent software engineers, consultants and small dev studios. It covers case studies, services, writing and a project enquiry form that delivers to your inbox.
+
+![Home page of the Software Engineer Portfolio theme](.github/assets/screenshot.png)
 
 The demo brand, **Mira Castell**, is fictional. All client names, quotes and figures are demo content.
+
+If this theme is useful to you, a ⭐ on GitHub helps other engineers find it.
 
 ## Features
 
@@ -19,7 +27,7 @@ The demo brand, **Mira Castell**, is fictional. All client names, quotes and fig
 
 ## Requirements
 
-- Node.js 22.23.4 or newer (24 recommended, see `.nvmrc`)
+- Node.js `^22.23.4`, `^24.16.0` or `>=26.3.0` (24 recommended, see `.nvmrc`)
 - Yarn 1 (enabled through Corepack)
 
 ## Quick start
@@ -65,7 +73,7 @@ Without a webhook or email transport, a production server answers form submissio
 
 | What | Where |
 |---|---|
-| Name, contact details, availability, social links, SEO defaults | `src/data/site.js` |
+| Name, contact details, availability, social links, SEO defaults, footer theme credit | `src/data/site.js` |
 | Menus, header button, footer columns, announcement bar | `src/data/navigation.js` |
 | Bio, portrait, highlights, client names, experience, toolbox, principles | `src/data/profile.js` |
 | Case studies | `src/data/projects.js` and `src/assets/images/projects/` |
@@ -108,7 +116,7 @@ See `documentation/index.html` for Render, Railway, DigitalOcean App Platform, F
 
 ```text
 .
-├── documentation/          index.html: full buyer documentation
+├── documentation/          index.html: full documentation
 ├── public/                 favicons, site.webmanifest, images/og-default.jpg
 ├── scripts/package.sh      builds the release zip
 ├── src/
@@ -127,10 +135,27 @@ See `documentation/index.html` for Render, Railway, DigitalOcean App Platform, F
 └── README.md, CHANGELOG.md, LICENSE.md
 ```
 
+## Contributing
+
+Bug reports, fixes and improvements are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started, and [SECURITY.md](SECURITY.md) to report a vulnerability privately.
+
 ## Support
 
-Questions or problems? Contact ThemesEngine support through the marketplace where you bought the theme. Please include your theme version (see `CHANGELOG.md`) and the steps to reproduce the issue.
+Questions or problems? [Open an issue](https://github.com/themesengine/software-engineer-portfolio-theme/issues) with your theme version (see `CHANGELOG.md`) and the steps to reproduce the problem.
+
+## Credits
+
+| Item | License | Source |
+|---|---|---|
+| Astro | MIT | https://astro.build |
+| @astrojs/node | MIT | https://github.com/withastro/astro |
+| sharp (installed with Astro) | Apache-2.0 | https://sharp.pixelplumbing.com |
+| ESLint, eslint-plugin-astro, globals | MIT | https://eslint.org |
+| Space Grotesk (font) | SIL Open Font License 1.1 | https://fonts.google.com/specimen/Space+Grotesk |
+| Inter (font) | SIL Open Font License 1.1 | https://fonts.google.com/specimen/Inter |
+
+The project covers, article images, placeholder portrait, social image and favicons are original abstract artwork made for this theme and are covered by its MIT License. Replace the demo content, including `src/assets/images/portrait.jpg`, with your own before you publish.
 
 ## License
 
-See [LICENSE.md](LICENSE.md). One licence covers one website or client project.
+[MIT](LICENSE.md). Use it for personal or client sites, modify it and share it. The footer's "Built with" credit is optional, but keeping it is a nice way to support the project. Set `showThemeCredit` to `false` in `src/data/site.js` to remove it.

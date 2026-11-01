@@ -1,30 +1,21 @@
-# License
+MIT License
 
-Copyright © ThemesEngine. All rights reserved.
+Copyright (c) 2026 ThemesEngine
 
-## Summary
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-- **One site per licence.** Each licence covers one website, for yourself or for one client.
-- **Modifications allowed.** You may change the code, design and content as much as you like for that website.
-- **No redistribution.** You may not redistribute, resell or share the theme, or a modified version of it, as a template, theme, starter kit or part of a website builder.
-- **No warranty.** The theme is provided as is. ThemesEngine is not liable for damages arising from its use.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The demo content (the fictional brand "Mira Castell", client names, quotes, figures and articles) is provided only to show how the theme works. Replace it before you publish.
-
-## Third-party software and assets
-
-| Item | License | Source |
-|---|---|---|
-| Astro | MIT | https://astro.build |
-| @astrojs/node | MIT | https://github.com/withastro/astro |
-| sharp (installed with Astro) | Apache-2.0 | https://sharp.pixelplumbing.com |
-| ESLint, eslint-plugin-astro, globals | MIT | https://eslint.org |
-| Space Grotesk (font) | SIL Open Font License 1.1 | https://fonts.google.com/specimen/Space+Grotesk |
-| Inter (font) | SIL Open Font License 1.1 | https://fonts.google.com/specimen/Inter |
-
-## Images
-
-The project covers, article images, placeholder portrait, social image and favicons are original
-abstract artwork generated for this theme and are covered by this licence. No stock photos are
-included. Replace `src/assets/images/portrait.jpg` with your own photo, and credit any photos you
-add here.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

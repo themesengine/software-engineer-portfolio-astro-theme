@@ -13,6 +13,8 @@ env:
 
 jobs:
   build-and-push:
+    # Forks should not build or publish the demo image.
+    if: github.repository == 'themesengine/software-engineer-portfolio-theme'
     runs-on: ubuntu-latest
 
     permissions:
