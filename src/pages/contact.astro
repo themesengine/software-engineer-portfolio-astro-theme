@@ -1,0 +1,94 @@
+---
+import ContactForm from "@/components/ContactForm.astro";
+import PageHero from "@/components/PageHero.astro";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+
+const socialLabels = {
+    github: "GitHub",
+    linkedin: "LinkedIn",
+    mastodon: "Mastodon"
+};
+
+const socialLinks =
+    Object.entries(site.social)
+        .filter(([, url]) => Boolean(url));
+---
+
+<Layout
+    title="Contact"
+    description={`Get in touch with ${site.name} about speaking, writing, open source or mentoring. For project work, use the project enquiry form.`}
+>
+    <PageHero
+        eyebrow="Contact"
+        title="Say hello"
+        intro="Questions, speaking invitations, open-source issues or just a note about something I wrote. For project work, the project form gets the right details to me faster."
+    >
+        <a
+            href="/hire"
+            class="text-link"
+        >
+            Start a project instead <span aria-hidden="true">→</span>
+        </a>
+    </PageHero>
+
+    <section class="section section--flush-top">
+        <div class="container split split--sidebar">
+            <div class="form-card">
+                <ContactForm/>
+            </div>
+
+            <aside class="contact-details">
+                <h2 class="section-title">Direct</h2>
+
+                <dl class="contact-details__list">
+                    <div>
+                        <dt>Email</dt>
+                        <dd>
+                            <a href={`mailto:${site.email}`}>{site.email}</a>
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Phone</dt>
+                        <dd>
+                            <a href={`tel:${site.phone.value}`}>{site.phone.display}</a>
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Based in</dt>
+                        <dd>{site.address.city}, {site.address.country}. Working remotely across UK and European time zones.</dd>
+                    </div>
+
+                    {socialLinks.length > 0 && (
+                        <div>
+                            <dt>Elsewhere</dt>
+                            <dd>
+                                <ul
+                                    class="contact-details__social"
+                                    role="list"
+                                >
+                                    {socialLinks.map(([key, url]) => (
+                                        <li>
+                                            <a
+                                                href={url}
+                                                rel="me noopener"
+                                                target="_blank"
+                                            >
+                                                {socialLabels[key] || key}
+                                                <span class="visually-hidden"> (opens in a new tab)</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </dd>
+                        </div>
+                    )}
+                </dl>
+            </aside>
+        </div>
+    </section>
+</Layout>

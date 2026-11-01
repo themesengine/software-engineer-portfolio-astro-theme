@@ -1,0 +1,28 @@
+---
+/*
+ * Spam trap. The field is hidden from people and assistive technology,
+ * so only bots fill it in; the API silently discards those submissions.
+ * The inline style keeps it hidden even if the CSS changes.
+ */
+const {
+    formId
+} = Astro.props;
+---
+
+<div
+    class="form__honeypot"
+    aria-hidden="true"
+    style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"
+>
+    <label for={`${formId}-website`}>
+        Leave this field empty
+    </label>
+
+    <input
+        id={`${formId}-website`}
+        name="website"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+    />
+</div>

@@ -1,0 +1,51 @@
+---
+import {
+    site
+} from "@/data/site";
+
+// The mark matches public/favicon.svg. Replace both if you change it.
+const {
+    class: className = ""
+} = Astro.props;
+---
+
+<a
+    href="/"
+    class={`logo ${className}`.trim()}
+>
+    <svg
+        class="logo__mark"
+        viewBox="0 0 64 64"
+        width="32"
+        height="32"
+        aria-hidden="true"
+    >
+        <rect
+            width="64"
+            height="64"
+            rx="14"
+            fill="currentColor"
+        />
+        <path
+            d="M18 22 L28 32 L18 42"
+            stroke="var(--color-background)"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+        <line
+            x1="32"
+            y1="43"
+            x2="46"
+            y2="43"
+            stroke="var(--color-background)"
+            stroke-width="6"
+            stroke-linecap="round"
+        />
+    </svg>
+
+    <span class="logo__text">
+        {site.name}
+    </span>
+</a>

@@ -1,0 +1,270 @@
+---
+/*
+ * Project enquiry form on /hire. Options and validation live in
+ * src/lib/forms/enquiry.js; submissions go to src/pages/api/enquiry.js.
+ */
+import HoneypotField from "@/components/HoneypotField.astro";
+import {
+    budgetOptions,
+    projectTypeOptions,
+    timelineOptions
+} from "@/lib/forms/enquiry";
+
+const id = "enquiry-form";
+---
+
+<form
+    id={id}
+    class="form"
+    action="/api/enquiry"
+    method="post"
+    novalidate
+    data-enquiry-form
+>
+    <div class="form__row">
+        <div class="form__field">
+            <label
+                class="form__label"
+                for={`${id}-name`}
+            >
+                Your name
+            </label>
+
+            <input
+                id={`${id}-name`}
+                class="form__input"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+                aria-describedby={`${id}-name-error`}
+            />
+
+            <p
+                id={`${id}-name-error`}
+                class="form__error"
+                hidden
+            ></p>
+        </div>
+
+        <div class="form__field">
+            <label
+                class="form__label"
+                for={`${id}-email`}
+            >
+                Work email
+            </label>
+
+            <input
+                id={`${id}-email`}
+                class="form__input"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                aria-describedby={`${id}-email-error`}
+            />
+
+            <p
+                id={`${id}-email-error`}
+                class="form__error"
+                hidden
+            ></p>
+        </div>
+    </div>
+
+    <div class="form__field">
+        <label
+            class="form__label"
+            for={`${id}-company`}
+        >
+            Company <span class="form__optional">(optional)</span>
+        </label>
+
+        <input
+            id={`${id}-company`}
+            class="form__input"
+            name="company"
+            type="text"
+            autocomplete="organization"
+            aria-describedby={`${id}-company-error`}
+        />
+
+        <p
+            id={`${id}-company-error`}
+            class="form__error"
+            hidden
+        ></p>
+    </div>
+
+    <fieldset
+        class="form__fieldset"
+        aria-describedby={`${id}-projectType-error`}
+    >
+        <legend class="form__label">
+            What do you need help with?
+        </legend>
+
+        <div class="form__choices">
+            {projectTypeOptions.map((option, index) => (
+                <label class="form__choice">
+                    <input
+                        type="radio"
+                        name="projectType"
+                        value={option.value}
+                        checked={index === 0}
+                    />
+                    <span>{option.label}</span>
+                </label>
+            ))}
+        </div>
+
+        <p
+            id={`${id}-projectType-error`}
+            class="form__error"
+            hidden
+        ></p>
+    </fieldset>
+
+    <div class="form__row">
+        <div class="form__field">
+            <label
+                class="form__label"
+                for={`${id}-budget`}
+            >
+                Budget
+            </label>
+
+            <select
+                id={`${id}-budget`}
+                class="form__input"
+                name="budget"
+                required
+                aria-describedby={`${id}-budget-error`}
+            >
+                {budgetOptions.map((option) => (
+                    <option value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+
+            <p
+                id={`${id}-budget-error`}
+                class="form__error"
+                hidden
+            ></p>
+        </div>
+
+        <div class="form__field">
+            <label
+                class="form__label"
+                for={`${id}-timeline`}
+            >
+                Timeline
+            </label>
+
+            <select
+                id={`${id}-timeline`}
+                class="form__input"
+                name="timeline"
+                required
+                aria-describedby={`${id}-timeline-error`}
+            >
+                {timelineOptions.map((option) => (
+                    <option value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+
+            <p
+                id={`${id}-timeline-error`}
+                class="form__error"
+                hidden
+            ></p>
+        </div>
+    </div>
+
+    <div class="form__field">
+        <label
+            class="form__label"
+            for={`${id}-message`}
+        >
+            About the project
+        </label>
+
+        <p
+            id={`${id}-message-hint`}
+            class="form__hint"
+        >
+            What are you building, who is it for, and what's the hardest part right now?
+        </p>
+
+        <textarea
+            id={`${id}-message`}
+            class="form__input"
+            name="message"
+            rows="7"
+            required
+            aria-describedby={`${id}-message-hint ${id}-message-error`}
+        ></textarea>
+
+        <p
+            id={`${id}-message-error`}
+            class="form__error"
+            hidden
+        ></p>
+    </div>
+
+    <HoneypotField formId={id}/>
+
+    <p
+        class="form__message"
+        data-form-message
+        role="alert"
+        hidden
+    ></p>
+
+    <div class="form__actions">
+        <button
+            class="button"
+            type="submit"
+        >
+            Send enquiry
+        </button>
+
+        <p class="form__privacy">
+            I use your details only to reply to your enquiry. See the <a href="/privacy">privacy policy</a>.
+        </p>
+    </div>
+</form>
+
+<div
+    id={`${id}-success`}
+    class="form__success"
+    tabindex="-1"
+    hidden
+>
+    <p class="form__success-title">
+        Enquiry sent
+    </p>
+    <p data-form-success-message></p>
+</div>
+
+<script>
+    import {
+        normalizeEnquiryRequest,
+        validateEnquiryRequest
+    } from "@/lib/forms/enquiry";
+    import {
+        enhanceForm
+    } from "@/scripts/enhanceForm";
+
+    document.querySelectorAll("[data-enquiry-form]").forEach((form) => {
+        enhanceForm(form, {
+            normalize: normalizeEnquiryRequest,
+            validate: validateEnquiryRequest
+        });
+    });
+</script>

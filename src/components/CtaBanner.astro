@@ -1,0 +1,45 @@
+---
+import AvailabilityBadge from "@/components/AvailabilityBadge.astro";
+import {
+    site
+} from "@/data/site";
+
+const {
+    title = "Have a project in mind?",
+    text = "Tell me what you're building and where you're stuck. I'll reply within two working days with honest next steps, even if I'm not the right fit."
+} = Astro.props;
+---
+
+<section class="section">
+    <div class="container">
+        <div class="cta-banner">
+            <div class="cta-banner__text">
+                <AvailabilityBadge/>
+
+                <h2 class="cta-banner__title">
+                    {title}
+                </h2>
+
+                <p class="cta-banner__intro">
+                    {text}
+                </p>
+            </div>
+
+            <div class="cta-banner__actions">
+                <a
+                    href="/hire"
+                    class="button"
+                >
+                    Start a project
+                </a>
+
+                <a
+                    href={`mailto:${site.email}`}
+                    class="button button--ghost"
+                >
+                    {site.email}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

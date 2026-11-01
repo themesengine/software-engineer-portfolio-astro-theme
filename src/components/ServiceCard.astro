@@ -1,0 +1,38 @@
+---
+import ServiceIcon from "@/components/ServiceIcon.astro";
+import {
+    formatPrice
+} from "@/lib/format";
+
+const {
+    service,
+    headingLevel = 3
+} = Astro.props;
+
+const Heading = `h${headingLevel}`;
+---
+
+<article class="service-card">
+    <span class="service-card__icon">
+        <ServiceIcon name={service.icon}/>
+    </span>
+
+    <Heading class="service-card__title">
+        <a
+            href={`/services/${service.slug}`}
+            class="service-card__link"
+        >
+            {service.title}
+        </a>
+    </Heading>
+
+    <p class="service-card__summary">
+        {service.summary}
+    </p>
+
+    {service.priceFrom && (
+        <p class="service-card__price">
+            From {formatPrice(service.priceFrom)} <span>{service.priceUnit}</span>
+        </p>
+    )}
+</article>

@@ -1,0 +1,110 @@
+---
+import {
+    Font
+} from "astro:assets";
+
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import SEO from "@/components/SEO.astro";
+import {
+    site
+} from "@/data/site";
+
+import "@/styles/globals.css";
+
+const {
+    title,
+    description,
+    image,
+    type,
+    structuredData,
+    noIndex = false
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.language}>
+<head>
+    <meta charset="utf-8"/>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    />
+
+    <meta
+        name="theme-color"
+        content={site.themeColor}
+    />
+
+    <!-- The theme is dark only; change to "light" if you lighten the tokens. -->
+    <meta
+        name="color-scheme"
+        content="dark"
+    />
+
+    <link
+        rel="icon"
+        href="/favicon.ico"
+        sizes="32x32"
+    />
+
+    <link
+        rel="icon"
+        href="/favicon.svg"
+        type="image/svg+xml"
+    />
+
+    <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+    />
+
+    <link
+        rel="manifest"
+        href="/site.webmanifest"
+    />
+
+    <Font
+        cssVariable="--font-display-family"
+        preload
+    />
+
+    <Font
+        cssVariable="--font-body-family"
+        preload
+    />
+
+    <SEO
+        title={title}
+        description={description}
+        image={image}
+        type={type}
+        structuredData={structuredData}
+        noIndex={noIndex}
+    />
+</head>
+
+<body>
+<a
+    href="#main-content"
+    class="skip-link"
+>
+    Skip to content
+</a>
+
+<div class="site">
+    <Header/>
+
+    <main
+        id="main-content"
+        class="site-main"
+        tabindex="-1"
+    >
+        <slot/>
+    </main>
+
+    <Footer/>
+</div>
+</body>
+</html>

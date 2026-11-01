@@ -1,0 +1,156 @@
+---
+import {
+    Image
+} from "astro:assets";
+import {
+    render
+} from "astro:content";
+
+import ArticleCard from "@/components/ArticleCard.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import Layout from "@/layouts/Layout.astro";
+import {
+    getArticles,
+    getRelatedArticles,
+    readingTime
+} from "@/lib/articles";
+import {
+    formatDate,
+    toIsoDate
+} from "@/lib/format";
+import {
+    createArticleSchema,
+    createBreadcrumbSchema
+} from "@/lib/json-ld";
+
+export async function getStaticPaths() {
+    const articles = await getArticles();
+
+    return articles.map((article) => ({
+        params: {
+            slug: article.id
+        },
+        props: {
+            article,
+            related: getRelatedArticles(article, articles, 3)
+        }
+    }));
+}
+
+const {
+    article,
+    related
+} = Astro.props;
+
+const {
+    Content
+} = await render(article);
+
+const path = `/journal/${article.id}`;
+
+const breadcrumbs = [
+    {
+        label: "Home",
+        href: "/"
+    },
+    {
+        label: "Writing",
+        href: "/journal"
+    },
+    {
+        label: article.data.title,
+        href: path
+    }
+];
+---
+
+<Layout
+    title={article.data.title}
+    description={article.data.excerpt}
+    image={article.data.image}
+    type="article"
+    structuredData={[
+        createArticleSchema(article, path),
+        createBreadcrumbSchema(breadcrumbs)
+    ]}
+>
+    <Breadcrumbs items={breadcrumbs}/>
+
+    <article class="article">
+        <header class="article__header">
+            <div class="container container--narrow">
+                <p class="article__meta">
+                    <span class="article__category">{article.data.category}</span>
+                    <span aria-hidden="true">·</span>
+                    <time datetime={toIsoDate(article.data.publishedAt)}>
+                        {formatDate(article.data.publishedAt)}
+                    </time>
+                    <span aria-hidden="true">·</span>
+                    <span>{readingTime(article.body)}</span>
+                </p>
+
+                <h1 class="article__title">
+                    {article.data.title}
+                </h1>
+
+                <p class="lead">
+                    {article.data.excerpt}
+                </p>
+
+                {article.data.author && (
+                    <p class="article__author">
+                        By {article.data.author}
+                        {article.data.updatedAt && (
+                            <>
+                                {" "}· Updated{" "}
+                                <time datetime={toIsoDate(article.data.updatedAt)}>
+                                    {formatDate(article.data.updatedAt)}
+                                </time>
+                            </>
+                        )}
+                    </p>
+                )}
+            </div>
+        </header>
+
+        <div class="container">
+            <Image
+                src={article.data.image}
+                alt={article.data.imageAlt}
+                widths={[640, 1024, 1440]}
+                sizes="(max-width: 72rem) 100vw, 1152px"
+                class="article__image"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </div>
+
+        <div class="container container--narrow">
+            <div class="prose article__body">
+                <Content/>
+            </div>
+        </div>
+    </article>
+
+    {related.length > 0 && (
+        <section class="section">
+            <div class="container">
+                <div class="section__header">
+                    <div class="section__heading">
+                        <p class="eyebrow">Keep reading</p>
+                        <h2>Related articles</h2>
+                    </div>
+                </div>
+
+                <div class="grid grid--3">
+                    {related.map((item) => (
+                        <ArticleCard article={item}/>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <CtaBanner/>
+</Layout>

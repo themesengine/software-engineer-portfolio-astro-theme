@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Documentation | Software Engineer Portfolio Astro theme</title>
+    <style>
+        :root {
+            --bg: #0b0d10;
+            --surface: #12161c;
+            --border: #262d36;
+            --text: #e6e9ed;
+            --muted: #a3acb8;
+            --accent: #3ddc84;
+            --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        a { color: var(--accent); }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            border-right: 1px solid var(--border);
+        }
+
+        nav p { margin: 0 0 1rem; font-weight: 700; }
+
+        nav ol { margin: 0; padding: 0; list-style: none; }
+
+        nav a {
+            display: block;
+            padding: 0.3rem 0;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        main { padding: 3rem 3rem 6rem; max-width: 52rem; }
+
+        h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 1rem; }
+
+        h2 {
+            margin: 3.5rem 0 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 1.6rem;
+        }
+
+        h3 { margin: 2rem 0 0.5rem; font-size: 1.15rem; }
+
+        code {
+            font-family: var(--mono);
+            font-size: 0.9em;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.05em 0.35em;
+        }
+
+        .code {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .code pre {
+            margin: 0;
+            padding: 1rem 1.25rem;
+            overflow-x: auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font: 0.86rem/1.6 var(--mono);
+        }
+
+        .code pre code { border: 0; padding: 0; background: none; }
+
+        .code button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--muted);
+            font: 0.75rem var(--mono);
+            cursor: pointer;
+        }
+
+        .code button:hover { color: var(--accent); border-color: var(--accent); }
+
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+
+        th, td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+
+        th { color: var(--muted); font-weight: 600; }
+
+        .note {
+            padding: 0.9rem 1.1rem;
+            border-left: 3px solid var(--accent);
+            background: var(--surface);
+            border-radius: 0 6px 6px 0;
+        }
+
+        ul.checklist { list-style: none; padding: 0; }
+
+        ul.checklist li::before { content: "☐ "; color: var(--accent); }
+
+        :focus-visible { outline: 2px solid #8bd5ff; outline-offset: 2px; }
+
+        @media (max-width: 48rem) {
+            .layout { grid-template-columns: 1fr; }
+
+            nav { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+
+            main { padding: 2rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <nav aria-label="Documentation">
+        <p>Portfolio theme docs</p>
+        <ol>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#requirements">Requirements</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#structure">Project structure</a></li>
+            <li><a href="#rebranding">Rebranding</a></li>
+            <li><a href="#content">Editing content</a></li>
+            <li><a href="#design">Colours, fonts and images</a></li>
+            <li><a href="#forms">Forms and email</a></li>
+            <li><a href="#env">Environment variables</a></li>
+            <li><a href="#deployment">Deployment</a></li>
+            <li><a href="#seo">SEO and staging</a></li>
+            <li><a href="#launch">Launch checklist</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#updating">Updating the theme</a></li>
+            <li><a href="#support">Support and credits</a></li>
+        </ol>
+    </nav>
+
+    <main>
+        <h1>Software Engineer Portfolio: Astro theme</h1>
+        <p>Version 1.0.0. A dark, technical portfolio and landing page for independent software engineers, consultants and small studios.</p>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>
+            The theme gives you a landing page, case studies, services, an about page, a writing section, a project
+            enquiry form, a contact form, legal pages and error pages. Pages are pre-rendered to static HTML for speed;
+            the two forms and a health check run on a small Node server that ships with the theme.
+        </p>
+        <p class="note">
+            The demo person, <strong>Mira Castell</strong>, and all clients, quotes and figures are fictional. Replace them
+            with your own before you publish.
+        </p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+            <li>Node.js 22.23.4 or newer. Version 24 is recommended (see <code>.nvmrc</code>).</li>
+            <li>Yarn 1, enabled with Corepack (bundled with Node).</li>
+            <li>For production: any host that runs Node or Docker containers.</li>
+        </ul>
+
+        <h2 id="installation">Installation</h2>
+        <div class="code"><pre><code>corepack enable
+yarn install --frozen-lockfile
+cp .env.example .env
+yarn dev</code></pre></div>
+        <p>Open <code>http://localhost:4321</code>. Changes to pages, data files and styles reload automatically.</p>
+        <p>Before deploying, run the full check, which lints and builds the site:</p>
+        <div class="code"><pre><code>yarn run check</code></pre></div>
+        <p>Use <code>yarn run check</code>, not <code>yarn check</code>: the latter is a built-in Yarn 1 command.</p>
+
+        <h2 id="structure">Project structure</h2>
+        <div class="code"><pre><code>src/
+├── assets/images/      portrait.jpg, projects/, journal/
+├── components/         Header, Footer, Logo, PageHero, cards, EnquiryForm, ContactForm, SEO
+├── content/articles/   Markdown articles (file name = URL)
+├── data/               site.js, navigation.js, profile.js, projects.js, services.js
+├── layouts/Layout.astro
+├── lib/                articles.js, format.js, json-ld.js, forms/, server/
+├── pages/              index, projects/, services/, about, journal/, hire, contact,
+│                       privacy, terms, 404, 500, api/, sitemap.xml.js, robots.txt.js
+├── scripts/            menu.js, enhanceForm.js
+└── styles/             tokens, reset, typography, layout, utilities, components/, pages/</code></pre></div>
+
+        <h2 id="rebranding">Rebranding</h2>
+        <p>Most rebranding happens in <code>src/data/site.js</code>:</p>
+        <table>
+            <thead><tr><th>Key</th><th>What it controls</th></tr></thead>
+            <tbody>
+            <tr><td><code>name</code>, <code>legalName</code>, <code>descriptor</code>, <code>title</code>, <code>tagline</code></td><td>Your name, trading company, page titles and footer text</td></tr>
+            <tr><td><code>description</code></td><td>Default meta description</td></tr>
+            <tr><td><code>jobTitle</code>, <code>expertise</code></td><td>Structured data (<code>jobTitle</code>, <code>knowsAbout</code>) and the hero terminal</td></tr>
+            <tr><td><code>email</code>, <code>phone</code>, <code>address</code></td><td>Contact details everywhere, including form error messages</td></tr>
+            <tr><td><code>availability</code></td><td>The availability badge; set <code>open: false</code> when you're booked</td></tr>
+            <tr><td><code>cvUrl</code></td><td>Shows a "Download CV" button on the about page when set</td></tr>
+            <tr><td><code>social</code></td><td>Footer and contact links, plus <code>sameAs</code> in structured data. Empty values are hidden</td></tr>
+            <tr><td><code>themeColor</code></td><td>Browser UI colour</td></tr>
+            <tr><td><code>schemaType</code></td><td><code>Person</code> by default; use <code>ProfessionalService</code> for a studio</td></tr>
+            <tr><td><code>showDemoContentNotice</code>, <code>legalUpdatedAt</code></td><td>Legal page notice and date</td></tr>
+            </tbody>
+        </table>
+        <p>Also update <code>public/site.webmanifest</code> (name), the favicons in <code>public/</code> and the logo mark in <code>src/components/Logo.astro</code>.</p>
+
+        <h2 id="content">Editing content</h2>
+        <h3>Data files</h3>
+        <ul>
+            <li><code>src/data/profile.js</code>: hero text, bio, portrait, highlights, client names, experience, toolbox and principles.</li>
+            <li><code>src/data/projects.js</code>: case studies. Each needs a unique <code>slug</code>, an imported cover image, a summary, stack, outcomes, challenge, approach and result. <code>featured: true</code> shows it on the home page.</li>
+            <li><code>src/data/services.js</code>: services with price, inclusions, process steps and FAQs. Set <code>priceFrom: null</code> to hide a price.</li>
+            <li><code>src/data/navigation.js</code>: menus, the header button, footer columns and the optional announcement bar.</li>
+        </ul>
+        <p class="note">Only publish outcomes and figures you can stand behind. The demo figures are invented.</p>
+
+        <h3>Articles</h3>
+        <p>Add a Markdown file to <code>src/content/articles/</code>. The file name becomes the URL (<code>/journal/&lt;file-name&gt;</code>). The build fails with a clear message if the front matter is invalid.</p>
+        <div class="code"><pre><code>---
+title: "Your article title"
+excerpt: "One or two sentences for cards and search results."
+category: "Engineering"
+publishedAt: 2026-11-01
+updatedAt: 2026-11-15        # optional
+author: "Your Name"          # optional
+image: "../../assets/images/journal/your-image.jpg"
+imageAlt: "Describe the image"
+featured: false              # true leads the writing page
+---
+
+Write your article in Markdown. Code blocks are highlighted automatically.</code></pre></div>
+
+        <h2 id="design">Colours, fonts and images</h2>
+        <h3>Colours and spacing</h3>
+        <p>All colours, spacing, radii, shadows and type sizes are CSS variables in <code>src/styles/tokens.css</code>. Change <code>--color-accent</code> to recolour the whole site. Check text contrast stays at WCAG AA (4.5:1) against <code>--color-background</code>.</p>
+        <h3>Fonts</h3>
+        <p>Fonts are configured in <code>astro.config.mjs</code> under <code>fonts</code> and are downloaded at build time, so visitors never contact Google. Change <code>name</code> to any Google Fonts family and adjust <code>weights</code>. Code uses the system monospace stack (<code>--font-mono</code>).</p>
+        <h3>Images</h3>
+        <ul>
+            <li>Replace <code>src/assets/images/portrait.jpg</code> with your photo (4:5 works best) and update <code>portrait.alt</code> in <code>profile.js</code>.</li>
+            <li>Project covers (16:10) live in <code>src/assets/images/projects/</code>; article images (16:9) in <code>src/assets/images/journal/</code>. Astro resizes and converts them automatically.</li>
+            <li>The social sharing image is <code>public/images/og-default.jpg</code> (1200×630).</li>
+            <li>Favicons: <code>favicon.svg</code>, <code>favicon.ico</code>, <code>apple-touch-icon.png</code>, <code>icon-192.png</code>, <code>icon-512.png</code> in <code>public/</code>.</li>
+        </ul>
+
+        <h2 id="forms">Forms and email</h2>
+        <p>
+            The project enquiry form (<code>/hire</code>) and contact form (<code>/contact</code>) validate in the browser
+            and again on the server using the same rules (<code>src/lib/forms/</code>). They include a hidden honeypot field
+            and a per-visitor rate limit. Configure at least one delivery transport for production; without one, the server
+            returns an error that shows your phone number and email, so submissions are never silently lost.
+        </p>
+        <h3>Webhook</h3>
+        <p>Set <code>FORM_WEBHOOK_URL</code> (and optionally <code>FORM_WEBHOOK_SECRET</code>, sent as a bearer token). Each submission is POSTed as JSON:</p>
+        <div class="code"><pre><code>{
+  "id": "PRJ-2A4223BC37",
+  "type": "enquiry",
+  "submittedAt": "2026-11-01T12:47:12.852Z",
+  "title": "Project enquiry from Sam (Acme)",
+  "replyTo": "sam@example.com",
+  "fields": [
+    { "label": "Project type", "value": "Back end, APIs or integrations" },
+    { "label": "Budget", "value": "£10,000 to £25,000" }
+  ],
+  "data": { "name": "Sam", "email": "sam@example.com", "projectType": "platform", "...": "..." },
+  "site": "Your Name",
+  "text": "Plain-text summary for chat tools such as Slack"
+}</code></pre></div>
+        <h3>Email with Resend</h3>
+        <ol>
+            <li>Create an account at resend.com and verify your sending domain.</li>
+            <li>Create an API key.</li>
+            <li>Set <code>RESEND_API_KEY</code>, <code>FORM_EMAIL_TO</code> (comma-separated) and <code>FORM_EMAIL_FROM</code> (e.g. <code>Your Name &lt;web@your-domain.com&gt;</code>).</li>
+        </ol>
+        <p>Replies go straight to the visitor: the email's reply-to is their address. If both transports are set, the submission succeeds when at least one delivers it.</p>
+        <h3>Changing the options</h3>
+        <p>Edit project types, budgets and timelines in <code>src/lib/forms/enquiry.js</code>, and contact topics in <code>src/lib/forms/contact.js</code>. The browser and server pick up the change together.</p>
+
+        <h2 id="env">Environment variables</h2>
+        <table>
+            <thead><tr><th>Variable</th><th>Read at</th><th>Purpose</th></tr></thead>
+            <tbody>
+            <tr><td><code>PUBLIC_SITE_URL</code></td><td>Build</td><td>Public HTTPS URL, no trailing slash. Rebuild after changing</td></tr>
+            <tr><td><code>PUBLIC_SITE_NOINDEX</code></td><td>Build</td><td><code>true</code> on staging sites</td></tr>
+            <tr><td><code>HOST</code>, <code>PORT</code></td><td>Runtime</td><td>Where <code>yarn start</code> listens</td></tr>
+            <tr><td><code>FORM_WEBHOOK_URL</code>, <code>FORM_WEBHOOK_SECRET</code></td><td>Runtime</td><td>Webhook delivery</td></tr>
+            <tr><td><code>RESEND_API_KEY</code>, <code>FORM_EMAIL_TO</code>, <code>FORM_EMAIL_FROM</code></td><td>Runtime</td><td>Email delivery</td></tr>
+            <tr><td><code>DEMO_MODE</code></td><td>Runtime</td><td><code>true</code> accepts submissions without sending them. Never on a live site</td></tr>
+            </tbody>
+        </table>
+
+        <h2 id="deployment">Deployment</h2>
+        <p>Deploy as a Node app or Docker container: the forms need the included server. Always set <code>PUBLIC_SITE_URL</code> to your HTTPS domain at build time; the server then trusts forwarded headers from that domain only, which keeps rate limiting accurate behind a proxy.</p>
+        <h3>Render</h3>
+        <p>New Web Service → connect the repository → Build command <code>yarn install --frozen-lockfile &amp;&amp; yarn build</code>, Start command <code>yarn start</code>. Add environment variables, including <code>HOST=0.0.0.0</code>. Render sets <code>PORT</code>.</p>
+        <h3>Railway</h3>
+        <p>New project from the repository. Railway detects the Dockerfile; add <code>PUBLIC_SITE_URL</code> as a variable (it's passed as a build argument) and your form variables.</p>
+        <h3>DigitalOcean App Platform</h3>
+        <p>Create an app from the repository, choose the Dockerfile, set the HTTP port to 3000 and add the environment variables (mark <code>PUBLIC_SITE_URL</code> as available at build time).</p>
+        <h3>Fly.io</h3>
+        <div class="code"><pre><code>fly launch --no-deploy
+fly secrets set RESEND_API_KEY=... FORM_EMAIL_TO=... FORM_EMAIL_FROM=...
+fly deploy --build-arg PUBLIC_SITE_URL=https://www.your-domain.com</code></pre></div>
+        <p>Set the internal port to 3000 in <code>fly.toml</code>.</p>
+        <h3>VPS with Nginx or Caddy</h3>
+        <div class="code"><pre><code>PUBLIC_SITE_URL=https://www.your-domain.com yarn build
+HOST=127.0.0.1 PORT=3000 yarn start   # run under systemd or pm2</code></pre></div>
+        <p>Caddy:</p>
+        <div class="code"><pre><code>www.your-domain.com {
+    reverse_proxy 127.0.0.1:3000
+}</code></pre></div>
+        <p>Nginx:</p>
+        <div class="code"><pre><code>server {
+    server_name www.your-domain.com;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}</code></pre></div>
+        <h3>Docker</h3>
+        <div class="code"><pre><code>docker build --build-arg PUBLIC_SITE_URL=https://www.your-domain.com -t portfolio .
+docker run -d -p 3000:3000 --env-file .env --restart unless-stopped portfolio</code></pre></div>
+        <p>Or with Compose: fill in <code>.env</code>, then <code>docker compose up -d --build</code>. The container reports its health through <code>/api/health</code>.</p>
+
+        <h2 id="seo">SEO and staging</h2>
+        <ul>
+            <li>Every page has a title, description, canonical URL, Open Graph tags and <code>twitter:card</code>.</li>
+            <li>Structured data: <code>Person</code> (with <code>jobTitle</code>, <code>knowsAbout</code>, <code>sameAs</code>) on every page, <code>BlogPosting</code> on articles, <code>BreadcrumbList</code> on detail pages.</li>
+            <li><code>/sitemap.xml</code> and <code>/robots.txt</code> are generated at build time. Add new static pages to <code>staticRoutes</code> in <code>src/pages/sitemap.xml.js</code>.</li>
+            <li>For staging, build with <code>PUBLIC_SITE_NOINDEX=true</code>: every page gets <code>noindex</code> and robots.txt blocks all crawling.</li>
+        </ul>
+
+        <h2 id="launch">Launch checklist</h2>
+        <ul class="checklist">
+            <li>Your name, email, phone, city and social links in <code>src/data/site.js</code></li>
+            <li>Your bio, portrait, experience and toolbox in <code>src/data/profile.js</code></li>
+            <li>Real case studies with figures you can verify; demo projects removed</li>
+            <li>Your services and prices, or prices hidden</li>
+            <li>Demo articles replaced with your own</li>
+            <li>Favicons, manifest and social image updated</li>
+            <li>Privacy and terms reviewed, then <code>showDemoContentNotice: false</code></li>
+            <li><code>PUBLIC_SITE_URL</code> set to your HTTPS domain</li>
+            <li>A form transport configured and a test enquiry received</li>
+            <li><code>DEMO_MODE</code> and <code>PUBLIC_SITE_NOINDEX</code> off</li>
+            <li><code>yarn run check</code> passes</li>
+        </ul>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+        <h3>Canonical links point to localhost</h3>
+        <p>Set <code>PUBLIC_SITE_URL</code> before building and rebuild. The build prints a warning when it is missing.</p>
+        <h3>Forms say "We could not send your request"</h3>
+        <p>No transport is configured, or all configured transports failed. Check the server logs for <code>[forms]</code> lines and your Resend or webhook settings.</p>
+        <h3>"Too many requests" while testing</h3>
+        <p>Each visitor can send five submissions per form every ten minutes. Restart the server to reset the counter.</p>
+        <h3>Fonts look like system fonts</h3>
+        <p>Fonts are downloaded during the build. Make sure the build machine can reach Google Fonts, then rebuild.</p>
+        <h3>Build fails on an article</h3>
+        <p>The message names the file and field. Usually a missing <code>imageAlt</code>, a wrong image path or an invalid date.</p>
+
+        <h2 id="updating">Updating the theme</h2>
+        <p>Keep your content in <code>src/data/</code>, <code>src/content/</code> and <code>src/assets/</code>, and your design changes in <code>src/styles/tokens.css</code> where possible; that keeps updates simple. Read <code>CHANGELOG.md</code> for each new version, compare the changed files and apply them with Git. Run <code>yarn run check</code> after updating.</p>
+
+        <h2 id="support">Support and credits</h2>
+        <p>For help, contact ThemesEngine support through the marketplace where you bought the theme, with your version number and steps to reproduce the problem.</p>
+        <p>Built with Astro and the Astro Node adapter. Fonts: Space Grotesk and Inter (SIL Open Font License). Images are original abstract artwork made for this theme. See <code>LICENSE.md</code> for the full list.</p>
+        <p>Possible extensions, not included: analytics, a CMS, multiple languages, or a light colour scheme.</p>
+    </main>
+</div>
+
+<script>
+    document.querySelectorAll(".code").forEach((block) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "Copy";
+        button.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(block.querySelector("code").innerText);
+                button.textContent = "Copied";
+            } catch {
+                button.textContent = "Press Ctrl+C";
+            }
+            setTimeout(() => {
+                button.textContent = "Copy";
+            }, 1500);
+        });
+        block.appendChild(button);
+    });
+</script>
+</body>
+</html>

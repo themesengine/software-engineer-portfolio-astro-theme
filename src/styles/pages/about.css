@@ -1,0 +1,67 @@
+/* About page. */
+
+.about-hero {
+    padding-block: var(--space-20);
+}
+
+.about-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: start;
+}
+
+.about-hero__text {
+    display: grid;
+    gap: var(--space-6);
+    justify-items: start;
+}
+
+.about-hero__text h1 {
+    font-size: var(--text-5xl);
+}
+
+.about-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.about-hero__portrait {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.toolbox {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.toolbox__title {
+    font-size: var(--text-md);
+}
+
+@media (max-width: 64rem) {
+    .about-hero__inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-10);
+    }
+
+    .about-hero__portrait {
+        max-width: 24rem;
+        order: -1;
+    }
+}
+
+@media (max-width: 48rem) {
+    .about-hero {
+        padding-block: var(--space-12);
+    }
+}

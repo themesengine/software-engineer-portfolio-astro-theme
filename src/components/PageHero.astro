@@ -1,0 +1,30 @@
+---
+// Top of inner pages: eyebrow, title, intro and optional extra content.
+const {
+    eyebrow,
+    title,
+    intro
+} = Astro.props;
+---
+
+<section class="page-hero">
+    <div class="container page-hero__inner">
+        {eyebrow && (
+            <p class="eyebrow">
+                {eyebrow}
+            </p>
+        )}
+
+        <h1 class="page-hero__title">
+            {title}
+        </h1>
+
+        {intro && (
+            <p class="lead page-hero__intro">
+                {intro}
+            </p>
+        )}
+
+        <slot/>
+    </div>
+</section>

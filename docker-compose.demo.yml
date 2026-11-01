@@ -1,0 +1,10 @@
+# Used for the public ThemesEngine demo only (excluded from the buyer
+# package). Buyers use docker-compose.yml instead.
+services:
+  software-engineer-portfolio-astro-theme-demo:
+    image: ghcr.io/themesengine/software-engineer-portfolio-astro-theme:latest
+    restart: unless-stopped
+    environment:
+      DEMO_MODE: "true"
+    ports:
+      - "3005:3000"

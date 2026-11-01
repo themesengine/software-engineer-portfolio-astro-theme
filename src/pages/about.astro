@@ -1,0 +1,148 @@
+---
+import {
+    Image
+} from "astro:assets";
+
+import CtaBanner from "@/components/CtaBanner.astro";
+import {
+    bio,
+    experience,
+    portrait,
+    principles,
+    toolbox
+} from "@/data/profile";
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="About"
+    description={`About ${site.name}: ${site.descriptor.toLowerCase()} in ${site.address.city}, with experience across fintech, healthcare and developer tooling.`}
+>
+    <section class="about-hero">
+        <div class="container about-hero__inner">
+            <div class="about-hero__text">
+                <p class="eyebrow">About</p>
+
+                <h1>Hello, I'm {site.name.split(" ")[0]}.</h1>
+
+                <div class="prose">
+                    {bio.map((paragraph) => (
+                        <p>{paragraph}</p>
+                    ))}
+                </div>
+
+                <div class="about-hero__actions">
+                    <a
+                        href="/hire"
+                        class="button"
+                    >
+                        Work with me
+                    </a>
+
+                    {site.cvUrl && (
+                        <a
+                            href={site.cvUrl}
+                            class="button button--ghost"
+                        >
+                            Download CV
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            <Image
+                src={portrait.image}
+                alt={portrait.alt}
+                widths={[400, 640, 900]}
+                sizes="(max-width: 64rem) 100vw, 420px"
+                class="about-hero__portrait"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </div>
+    </section>
+
+    <section class="section section--surface">
+        <div class="container split">
+            <div class="section__heading">
+                <p class="eyebrow">Experience</p>
+                <h2>Where I've worked</h2>
+            </div>
+
+            <ol
+                class="timeline"
+                role="list"
+            >
+                {experience.map((item) => (
+                    <li class="timeline__item">
+                        <p class="timeline__period">{item.period}</p>
+                        <h3 class="timeline__role">{item.role}</h3>
+                        <p class="timeline__company">{item.company}</p>
+                        <p class="timeline__text">{item.text}</p>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Toolbox</p>
+                    <h2>What I work with</h2>
+                    <p class="section__intro">
+                        Tools change; the habits behind them don't. These are the ones I reach for most often.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid--4">
+                {toolbox.map((group) => (
+                    <div class="toolbox">
+                        <h3 class="toolbox__title">{group.title}</h3>
+                        <ul
+                            class="tags"
+                            role="list"
+                        >
+                            {group.items.map((item) => (
+                                <li class="tag">{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--surface">
+        <div class="container">
+            <div class="section__header">
+                <div class="section__heading">
+                    <p class="eyebrow">Principles</p>
+                    <h2>How I work</h2>
+                </div>
+            </div>
+
+            <ol
+                class="principles principles--grid"
+                role="list"
+            >
+                {principles.map((principle, index) => (
+                    <li class="principles__item">
+                        <span class="principles__number">{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                            <h3 class="principles__title">{principle.title}</h3>
+                            <p class="principles__text">{principle.text}</p>
+                        </div>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <CtaBanner/>
+</Layout>

@@ -1,0 +1,220 @@
+/* Check lists, numbered steps, principles, timeline, stats and FAQ. */
+
+.check-list {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+}
+
+.check-list li {
+    position: relative;
+    padding-left: var(--space-6);
+    color: var(--color-text-muted);
+}
+
+.check-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.45em;
+    left: 0;
+    width: 0.75rem;
+    height: 0.4rem;
+    border-left: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    transform: rotate(-45deg);
+}
+
+.check-list--large {
+    gap: var(--space-4);
+    font-size: var(--text-md);
+}
+
+.check-list--large li {
+    color: var(--color-text);
+}
+
+.steps {
+    display: grid;
+    gap: var(--space-6);
+    padding: 0;
+    list-style: none;
+}
+
+.steps__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+}
+
+.steps__number {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+}
+
+.steps__title {
+    font-size: var(--text-md);
+}
+
+.steps__text {
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+}
+
+.principles {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+}
+
+.principles--grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+}
+
+.principles__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+}
+
+.principles--grid .principles__item {
+    background-color: var(--color-background);
+}
+
+.principles__number {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+}
+
+.principles__title {
+    font-size: var(--text-lg);
+}
+
+.principles__text {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.timeline {
+    display: grid;
+    gap: var(--space-8);
+    padding: 0 0 0 var(--space-6);
+    list-style: none;
+    border-left: 1px solid var(--color-border-strong);
+}
+
+.timeline__item {
+    position: relative;
+}
+
+.timeline__item::before {
+    content: "";
+    position: absolute;
+    top: 0.4rem;
+    left: calc(var(--space-6) * -1 - 5px);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+}
+
+.timeline__period {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+}
+
+.timeline__role {
+    margin-top: var(--space-2);
+    font-size: var(--text-lg);
+}
+
+.timeline__company {
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.timeline__text {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-10);
+    margin-top: var(--space-4);
+}
+
+.stats__item {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+}
+
+.stats__value {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.stats__label {
+    font-size: var(--text-sm);
+    color: var(--color-text-subtle);
+}
+
+.faq {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.faq__item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+}
+
+.faq__question {
+    padding: var(--space-5) var(--space-6);
+    font-weight: 600;
+    cursor: pointer;
+    list-style-position: inside;
+}
+
+.faq__question::marker {
+    color: var(--color-accent);
+}
+
+.faq__answer {
+    padding: 0 var(--space-6) var(--space-5);
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 48rem) {
+    .principles--grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .principles__item {
+        padding: var(--space-5);
+    }
+
+    .stats {
+        gap: var(--space-6);
+    }
+}

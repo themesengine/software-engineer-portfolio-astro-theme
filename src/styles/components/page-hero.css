@@ -1,0 +1,51 @@
+/* Inner page heading block. */
+
+.page-hero {
+    padding-block: var(--space-20) var(--space-16);
+    background-image:
+        radial-gradient(ellipse 60% 80% at 85% 0%, rgb(61 220 132 / 0.10), transparent 70%);
+}
+
+.page-hero__inner {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+}
+
+.page-hero__title {
+    max-width: 22ch;
+    font-size: var(--text-5xl);
+}
+
+.page-hero__intro {
+    max-width: 44rem;
+}
+
+.page-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: var(--space-2);
+}
+
+.page-hero__price {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.section--flush-top {
+    padding-top: 0;
+}
+
+.section-title {
+    margin-bottom: var(--space-6);
+    font-size: var(--text-2xl);
+}
+
+@media (max-width: 48rem) {
+    .page-hero {
+        padding-block: var(--space-12) var(--space-10);
+    }
+}

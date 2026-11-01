@@ -1,0 +1,45 @@
+---
+import {
+    site
+} from "@/data/site";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Something went wrong"
+    description="An unexpected error occurred."
+    noIndex
+>
+    <section class="error-page">
+        <div class="container container--narrow">
+            <p class="error-page__code">
+                HTTP/1.1 500 Internal Server Error
+            </p>
+
+            <h1>Something went wrong</h1>
+
+            <p class="lead">
+                An unexpected error stopped this page from loading. Please try again in a moment.
+                If it keeps happening, call{" "}
+                <a href={`tel:${site.phone.value}`}>{site.phone.display}</a>{" "}
+                or email{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a>.
+            </p>
+
+            <ul
+                class="error-page__links"
+                role="list"
+            >
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/projects">Work</a>
+                </li>
+                <li>
+                    <a href="/contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</Layout>

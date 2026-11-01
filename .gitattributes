@@ -1,0 +1,5 @@
+# Files excluded from the buyer package created by `yarn package`
+# (git archive honours export-ignore).
+.github                  export-ignore
+.gitattributes           export-ignore
+docker-compose.demo.yml  export-ignore
